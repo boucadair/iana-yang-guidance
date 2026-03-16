@@ -9,25 +9,25 @@
 <meta content="
        This document provides guidance to the RFC Editor and IANA on managing YANG modules in RFCs and IANA registries, ensuring consistent application of YANG Semantic Versioning rules. 
     " name="description">
-<meta content="xml2rfc 3.31.0" name="generator">
+<meta content="xml2rfc 3.32.0" name="generator">
 <meta content="IANA" name="keyword">
 <meta content="RFC Editor" name="keyword">
 <meta content="YANG" name="keyword">
 <meta content="Versioning" name="keyword">
 <meta content="draft-ietf-netmod-iana-yang-guidance-latest" name="ietf.draft">
 <!-- Generator version information:
-  xml2rfc 3.31.0
+  xml2rfc 3.32.0
     Python 3.12.12
     ConfigArgParse 1.7
     google-i18n-address 3.1.1
     intervaltree 3.2.1
     Jinja2 3.1.6
     lxml 6.0.2
-    platformdirs 4.5.1
+    platformdirs 4.9.4
     pycountry 24.6.1
     PyYAML 6.0.3
     requests 2.32.5
-    wcwidth 0.3.0
+    wcwidth 0.6.0
 -->
 <link href="draft-ietf-netmod-iana-yang-guidance.xml" rel="alternate" type="application/rfc+xml">
 <link href="#copyright" rel="license">
@@ -1052,7 +1052,7 @@ svg :is([fill="white"], [fill^="#fff"]) {
 </tr></thead>
 <tfoot><tr>
 <td class="left">Wilton</td>
-<td class="center">Expires 7 September 2026</td>
+<td class="center">Expires 17 September 2026</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -1065,12 +1065,12 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <dd class="internet-draft">draft-ietf-netmod-iana-yang-guidance-latest</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2026-03-06" class="published">6 March 2026</time>
+<time datetime="2026-03-16" class="published">16 March 2026</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Informational</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2026-09-07">7 September 2026</time></dd>
+<dd class="expires"><time datetime="2026-09-17">17 September 2026</time></dd>
 <dt class="label-authors">Author:</dt>
 <dd class="authors">
 <div class="author">
@@ -1120,7 +1120,7 @@ svg :is([fill="white"], [fill^="#fff"]) {
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 7 September 2026.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 17 September 2026.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -1315,10 +1315,7 @@ svg :is([fill="white"], [fill^="#fff"]) {
                 </ul>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.13.2.2">
-                <p id="section-toc.1-1.13.2.2.1"><a href="#appendix-A.2" class="auto internal xref">A.2</a>.  <a href="#name-recommended-workflow" class="internal xref">Recommended Workflow</a></p>
-</li>
-              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.13.2.3">
-                <p id="section-toc.1-1.13.2.3.1"><a href="#appendix-A.3" class="auto internal xref">A.3</a>.  <a href="#name-tool-limitations" class="internal xref">Tool Limitations</a></p>
+                <p id="section-toc.1-1.13.2.2.1"><a href="#appendix-A.2" class="auto internal xref">A.2</a>.  <a href="#name-tool-limitations" class="internal xref">Tool Limitations</a></p>
 </li>
             </ul>
 </li>
@@ -1392,6 +1389,9 @@ svg :is([fill="white"], [fill^="#fff"]) {
 </li>
         <li id="section-1-1.4">
           <p id="section-1-1.4.1">Should RFC8126-bis have any guidance for IANA maintained YANG modules derived from IANA registries?<a href="#section-1-1.4.1" class="pilcrow">¶</a></p>
+</li>
+        <li id="section-1-1.5">
+          <p id="section-1-1.5.1">For section <a href="#sec-background" class="auto internal xref">Section 5</a>, should we give examples of the rules, or just reference the module versioning draft [Reshad]?<a href="#section-1-1.5.1" class="pilcrow">¶</a></p>
 </li>
       </ol>
 </section>
@@ -1542,25 +1542,22 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <a href="#section-5.2" class="section-number selfRef">5.2. </a><a href="#name-backwards-compatibility-rul" class="section-name selfRef">Backwards Compatibility Rules</a>
         </h3>
 <p id="section-5.2-1">The rules that determine whether a change to a YANG module is backwards-compatible or non-backwards-compatible are defined in Section 3.1 of <span>[<a href="#I-D.ietf-netmod-yang-module-versioning" class="cite xref">I-D.ietf-netmod-yang-module-versioning</a>]</span>. These rules refine and extend the update rules specified in Section 11 of <span>[<a href="#RFC7950" class="cite xref">RFC7950</a>]</span>.<a href="#section-5.2-1" class="pilcrow">¶</a></p>
-<p id="section-5.2-2">Section 3.1.1 of <span>[<a href="#I-D.ietf-netmod-yang-module-versioning" class="cite xref">I-D.ietf-netmod-yang-module-versioning</a>]</span> defines backwards-compatible changes, which include:<a href="#section-5.2-2" class="pilcrow">¶</a></p>
+<p id="section-5.2-2">Section 3.1.1 of <span>[<a href="#I-D.ietf-netmod-yang-module-versioning" class="cite xref">I-D.ietf-netmod-yang-module-versioning</a>]</span> defines backwards-compatible changes, examples include:<a href="#section-5.2-2" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-5.2-3.1">
             <p id="section-5.2-3.1.1">Adding new schema nodes (e.g., new enum values, identities, leafs, containers)<a href="#section-5.2-3.1.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="section-5.2-3.2">
-            <p id="section-5.2-3.2.1">Adding new optional features or extensions<a href="#section-5.2-3.2.1" class="pilcrow">¶</a></p>
+            <p id="section-5.2-3.2.1">Changing the status of a schema node from "current" to "deprecated" (e.g., by adding a <code>status: "deprecated"</code> statement)<a href="#section-5.2-3.2.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="section-5.2-3.3">
-            <p id="section-5.2-3.3.1">Changing the status of a schema node from "current" to "deprecated" (e.g., by adding a <code>status: "deprecated"</code> statement)<a href="#section-5.2-3.3.1" class="pilcrow">¶</a></p>
+            <p id="section-5.2-3.3.1">Adding or updating "description" and "reference" statements (provided the semantic meaning is unchanged)<a href="#section-5.2-3.3.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="section-5.2-3.4">
-            <p id="section-5.2-3.4.1">Adding or updating "description" and "reference" statements (provided the semantic meaning is unchanged)<a href="#section-5.2-3.4.1" class="pilcrow">¶</a></p>
-</li>
-          <li class="normal" id="section-5.2-3.5">
-            <p id="section-5.2-3.5.1">Expanding constraints (e.g., widening ranges, adding enum values)<a href="#section-5.2-3.5.1" class="pilcrow">¶</a></p>
+            <p id="section-5.2-3.4.1">Expanding constraints (e.g., widening ranges, adding enum values)<a href="#section-5.2-3.4.1" class="pilcrow">¶</a></p>
 </li>
         </ul>
-<p id="section-5.2-4">Section 3.1.2 of <span>[<a href="#I-D.ietf-netmod-yang-module-versioning" class="cite xref">I-D.ietf-netmod-yang-module-versioning</a>]</span> defines non-backwards-compatible changes, which include:<a href="#section-5.2-4" class="pilcrow">¶</a></p>
+<p id="section-5.2-4">Section 3.1.2 of <span>[<a href="#I-D.ietf-netmod-yang-module-versioning" class="cite xref">I-D.ietf-netmod-yang-module-versioning</a>]</span> defines non-backwards-compatible changes, examples include:<a href="#section-5.2-4" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-5.2-5.1">
             <p id="section-5.2-5.1.1">Removing schema nodes (unless they already have status "obsolete")<a href="#section-5.2-5.1.1" class="pilcrow">¶</a></p>
@@ -1578,13 +1575,10 @@ svg :is([fill="white"], [fill^="#fff"]) {
             <p id="section-5.2-5.5.1">Changing numeric values assigned to enumerations<a href="#section-5.2-5.5.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="section-5.2-5.6">
-            <p id="section-5.2-5.6.1">Restricting constraints (e.g., narrowing ranges, removing enum values)<a href="#section-5.2-5.6.1" class="pilcrow">¶</a></p>
-</li>
-          <li class="normal" id="section-5.2-5.7">
-            <p id="section-5.2-5.7.1">Modifying "description" statements in ways that change semantic meaning or behavior<a href="#section-5.2-5.7.1" class="pilcrow">¶</a></p>
+            <p id="section-5.2-5.6.1">Modifying "description" statements in ways that change semantic meaning or behavior<a href="#section-5.2-5.6.1" class="pilcrow">¶</a></p>
 </li>
         </ul>
-<p id="section-5.2-6">In addition, section 4.4 of <span>[<a href="#I-D.ietf-netmod-yang-semver" class="cite xref">I-D.ietf-netmod-yang-semver</a>]</span> defines editorial changes as the subset of backwards-compatible changes that have no impact on the semantics or syntax of a YANG module, which include:<a href="#section-5.2-6" class="pilcrow">¶</a></p>
+<p id="section-5.2-6">In addition, section 4.4 of <span>[<a href="#I-D.ietf-netmod-yang-semver" class="cite xref">I-D.ietf-netmod-yang-semver</a>]</span> defines editorial changes as the subset of backwards-compatible changes that have no impact on the semantics or syntax of a YANG module, examples include:<a href="#section-5.2-6" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-5.2-7.1">
             <p id="section-5.2-7.1.1">Corrections to comments, descriptions, or references that do not change the semantic meaning<a href="#section-5.2-7.1.1" class="pilcrow">¶</a></p>
@@ -1593,13 +1587,7 @@ svg :is([fill="white"], [fill^="#fff"]) {
             <p id="section-5.2-7.2.1">Formatting improvements such as whitespace or indentation changes<a href="#section-5.2-7.2.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="section-5.2-7.3">
-            <p id="section-5.2-7.3.1">Corrections to typographical errors in description text<a href="#section-5.2-7.3.1" class="pilcrow">¶</a></p>
-</li>
-          <li class="normal" id="section-5.2-7.4">
-            <p id="section-5.2-7.4.1">Updates to contact information or copyright statements<a href="#section-5.2-7.4.1" class="pilcrow">¶</a></p>
-</li>
-          <li class="normal" id="section-5.2-7.5">
-            <p id="section-5.2-7.5.1">Changes to import statements that do not affect module functionality (e.g., updating import prefixes for readability)<a href="#section-5.2-7.5.1" class="pilcrow">¶</a></p>
+            <p id="section-5.2-7.3.1">Updates to contact information or copyright statements<a href="#section-5.2-7.3.1" class="pilcrow">¶</a></p>
 </li>
         </ul>
 </section>
@@ -1726,7 +1714,7 @@ svg :is([fill="white"], [fill^="#fff"]) {
               <p id="section-6.2.2-4.2.1">Ensure that only editorial changes (as defined in <a href="#sec-background" class="auto internal xref">Section 5</a>) are made without author consultation<a href="#section-6.2.2-4.2.1" class="pilcrow">¶</a></p>
 </li>
             <li class="normal" id="section-6.2.2-4.3">
-              <p id="section-6.2.2-4.3.1">If more significant changes are needed that might be backwards-compatible or non-backwards-compatible, consult with the authors to determine the correct version number and whether the <code>rev:non-backwards-compatible</code> extension is required<a href="#section-6.2.2-4.3.1" class="pilcrow">¶</a></p>
+              <p id="section-6.2.2-4.3.1">If more significant changes are needed that might be backwards-compatible or non-backwards-compatible, consult with the authors to determine the correct version number and whether the <code>rev:non-backwards-compatible</code> extension is required.<a href="#section-6.2.2-4.3.1" class="pilcrow">¶</a></p>
 </li>
           </ul>
 </section>
@@ -2078,7 +2066,7 @@ pyang --check-update-from iana-if-type@2025-10-15.yang \
                           iana-if-type@2025-11-15.yang
 </pre><a href="#section-7.4.4-2" class="pilcrow">¶</a>
 </div>
-<p id="section-7.4.4-3">If the tool reports NBC violations, the MAJOR version must be incremented and the <code>rev:non-backwards-compatible</code> extension must be added.<a href="#section-7.4.4-3" class="pilcrow">¶</a></p>
+<p id="section-7.4.4-3">If the tool reports NBC violations, the MAJOR version must be incremented and the <code>rev:non-backwards-compatible</code> extension MUST be added.<a href="#section-7.4.4-3" class="pilcrow">¶</a></p>
 <p id="section-7.4.4-4">If the tool reports no violations, determine whether the change is backwards-compatible (BC) or editorial:<a href="#section-7.4.4-4" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-7.4.4-5.1">
@@ -2389,8 +2377,12 @@ Thank you for your guidance.
 <span class="refAuthor">Bjorklund, M., Ed.</span>, <span class="refTitle">"YANG - A Data Modeling Language for the Network Configuration Protocol (NETCONF)"</span>, <span class="seriesInfo">RFC 6020</span>, <span class="seriesInfo">DOI 10.17487/RFC6020</span>, <time datetime="2010-10" class="refDate">October 2010</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc6020">https://www.rfc-editor.org/rfc/rfc6020</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="RFC7950">[RFC7950]</dt>
-      <dd>
+        <dd>
 <span class="refAuthor">Bjorklund, M., Ed.</span>, <span class="refTitle">"The YANG 1.1 Data Modeling Language"</span>, <span class="seriesInfo">RFC 7950</span>, <span class="seriesInfo">DOI 10.17487/RFC7950</span>, <time datetime="2016-08" class="refDate">August 2016</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc7950">https://www.rfc-editor.org/rfc/rfc7950</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC8340">[RFC8340]</dt>
+      <dd>
+<span class="refAuthor">Bjorklund, M.</span> and <span class="refAuthor">L. Berger, Ed.</span>, <span class="refTitle">"YANG Tree Diagrams"</span>, <span class="seriesInfo">BCP 215</span>, <span class="seriesInfo">RFC 8340</span>, <span class="seriesInfo">DOI 10.17487/RFC8340</span>, <time datetime="2018-03" class="refDate">March 2018</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc8340">https://www.rfc-editor.org/rfc/rfc8340</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 </dl>
 </section>
@@ -2448,57 +2440,95 @@ Thank you for your guidance.
           </h4>
 <p id="appendix-A.1.1-1"><strong>Purpose</strong>: pyang is a comprehensive YANG validator and converter tool that can validate syntax, check for backwards-compatible violations, and generate documentation.<a href="#appendix-A.1.1-1" class="pilcrow">¶</a></p>
 <p id="appendix-A.1.1-2"><strong>Primary Use Cases</strong>:<a href="#appendix-A.1.1-2" class="pilcrow">¶</a></p>
-<ul class="normal">
-<li class="normal" id="appendix-A.1.1-3.1">
+<ol start="1" type="1" class="normal type-1" id="appendix-A.1.1-3">
+<li id="appendix-A.1.1-3.1">
               <p id="appendix-A.1.1-3.1.1">Validating YANG module syntax and compliance with IETF conventions<a href="#appendix-A.1.1-3.1.1" class="pilcrow">¶</a></p>
 </li>
-            <li class="normal" id="appendix-A.1.1-3.2">
+            <li id="appendix-A.1.1-3.2">
               <p id="appendix-A.1.1-3.2.1">Detecting non-backwards-compatible changes between module versions<a href="#appendix-A.1.1-3.2.1" class="pilcrow">¶</a></p>
 </li>
-            <li class="normal" id="appendix-A.1.1-3.3">
+            <li id="appendix-A.1.1-3.3">
               <p id="appendix-A.1.1-3.3.1">Generating tree diagrams for documentation<a href="#appendix-A.1.1-3.3.1" class="pilcrow">¶</a></p>
 </li>
-          </ul>
+            <li id="appendix-A.1.1-3.4">
+              <p id="appendix-A.1.1-3.4.1">Formatting YANG modules in a consistent way prior to publication<a href="#appendix-A.1.1-3.4.1" class="pilcrow">¶</a></p>
+</li>
+          </ol>
 <p id="appendix-A.1.1-4"><strong>Installation</strong>: pyang is available via PyPI (<code>pip install pyang</code>) or from <a href="https://github.com/mbj4668/pyang">https://github.com/mbj4668/pyang</a>.  It is recommended to periodically check and update the version to pick up bugfixes and new functionality (which could include stricter checks).<a href="#appendix-A.1.1-4" class="pilcrow">¶</a></p>
-<p id="appendix-A.1.1-5"><strong>Basic YANG Syntax Validation</strong>:<a href="#appendix-A.1.1-5" class="pilcrow">¶</a></p>
-<div class="lang-shell sourcecode" id="appendix-A.1.1-6">
+<p id="appendix-A.1.1-5"><strong>Note to RFC Editor and reviewers, some of the tooling enhancements documented here are not yet been merged into the master pyang repository, so depending on publication timing we need to add further references.</strong><a href="#appendix-A.1.1-5" class="pilcrow">¶</a></p>
+<p id="appendix-A.1.1-6">To ensure that pyang correctly processes the YANG files, then the correct versions of any YANG module dependencies must also be used, this is often the latest version of the published YANG modules, but if a draft contains a set of YANG modules, or if there are set of drafts with YANG modules being published together then all the YANG modules in those drafts MUST be extracted together and validated.  These dependent YANG modules can either be stored in the same directory as the YANG module being validated/checked, or they can be stored in a separate directory and passed using the <code>-p</code> argument to provide a path to the directory.<a href="#appendix-A.1.1-6" class="pilcrow">¶</a></p>
+<div id="basic-yang-syntax-validation">
+<section id="appendix-A.1.1.1">
+            <h5 id="name-basic-yang-syntax-validatio">
+<a href="#appendix-A.1.1.1" class="section-number selfRef">A.1.1.1. </a><a href="#name-basic-yang-syntax-validatio" class="section-name selfRef">Basic YANG Syntax Validation</a>
+            </h5>
+<p id="appendix-A.1.1.1-1">This command below validates the module syntax and checks compliance with IETF-specific conventions. The output will show any errors or warnings. IETF and IANA modules SHOULD have no errors or warnings before publication.<a href="#appendix-A.1.1.1-1" class="pilcrow">¶</a></p>
+<div class="lang-shell sourcecode" id="appendix-A.1.1.1-2">
 <pre>
-pyang --ietf ietf-module-name.yang
-</pre><a href="#appendix-A.1.1-6" class="pilcrow">¶</a>
+pyang --ietf --strict --max-line-length=69 -Werror -p &lt;dep-module-directory&gt; ietf-module-name.yang
+</pre><a href="#appendix-A.1.1.1-2" class="pilcrow">¶</a>
 </div>
-<p id="appendix-A.1.1-7">or<a href="#appendix-A.1.1-7" class="pilcrow">¶</a></p>
-<div class="lang-shell sourcecode" id="appendix-A.1.1-8">
-<pre>
-pyang --strict iana-module-name.yang
-</pre><a href="#appendix-A.1.1-8" class="pilcrow">¶</a>
+</section>
 </div>
-<p id="appendix-A.1.1-9">This command validates the module syntax and checks compliance with IETF-specific conventions. Output will show any errors or warnings. IETF and IANA modules SHOULD have no errors or warnings before publication.<a href="#appendix-A.1.1-9" class="pilcrow">¶</a></p>
-<p id="appendix-A.1.1-10"><strong>Checking for NBC Changes</strong>:<a href="#appendix-A.1.1-10" class="pilcrow">¶</a></p>
-<div class="lang-shell sourcecode" id="appendix-A.1.1-11">
+<div id="checking-for-nbc-changes">
+<section id="appendix-A.1.1.2">
+            <h5 id="name-checking-for-nbc-changes">
+<a href="#appendix-A.1.1.2" class="section-number selfRef">A.1.1.2. </a><a href="#name-checking-for-nbc-changes" class="section-name selfRef">Checking for NBC Changes</a>
+            </h5>
+<p id="appendix-A.1.1.2-1">This command compares two versions of a module and reports any violations of the backwards-compatible update rules defined in <span>[<a href="#I-D.ietf-netmod-yang-module-versioning" class="cite xref">I-D.ietf-netmod-yang-module-versioning</a>]</span>.<a href="#appendix-A.1.1.2-1" class="pilcrow">¶</a></p>
+<div class="lang-shell sourcecode" id="appendix-A.1.1.2-2">
 <pre>
 pyang --check-update-from old-module.yang new-module.yang
-</pre><a href="#appendix-A.1.1-11" class="pilcrow">¶</a>
+</pre><a href="#appendix-A.1.1.2-2" class="pilcrow">¶</a>
 </div>
-<p id="appendix-A.1.1-12">This command compares two versions of a module and reports any violations of the backwards-compatible update rules defined in <span>[<a href="#I-D.ietf-netmod-yang-module-versioning" class="cite xref">I-D.ietf-netmod-yang-module-versioning</a>]</span>.<a href="#appendix-A.1.1-12" class="pilcrow">¶</a></p>
-<p id="appendix-A.1.1-13"><strong>Interpreting Output</strong>:<a href="#appendix-A.1.1-13" class="pilcrow">¶</a></p>
+<p id="appendix-A.1.1.2-3">This command validates the module syntax and checks compliance with IETF-specific conventions. The output will show any errors or warnings. IETF and IANA modules SHOULD have no errors or warnings before publication.<a href="#appendix-A.1.1.2-3" class="pilcrow">¶</a></p>
+<p id="appendix-A.1.1.2-4"><strong>Interpreting Output</strong>:<a href="#appendix-A.1.1.2-4" class="pilcrow">¶</a></p>
 <ul class="normal">
-<li class="normal" id="appendix-A.1.1-14.1">
-              <p id="appendix-A.1.1-14.1.1">If the command reports no errors: The changes are backwards-compatible (BC) or editorial<a href="#appendix-A.1.1-14.1.1" class="pilcrow">¶</a></p>
+<li class="normal" id="appendix-A.1.1.2-5.1">
+                <p id="appendix-A.1.1.2-5.1.1">If the command reports no errors: The changes are backwards-compatible (BC) or editorial<a href="#appendix-A.1.1.2-5.1.1" class="pilcrow">¶</a></p>
 </li>
-            <li class="normal" id="appendix-A.1.1-14.2">
-              <p id="appendix-A.1.1-14.2.1">If the command reports errors like "the enum 'X' has been removed": The changes are non-backwards-compatible (NBC), requiring a MAJOR version increment and the NBC extension<a href="#appendix-A.1.1-14.2.1" class="pilcrow">¶</a></p>
+              <li class="normal" id="appendix-A.1.1.2-5.2">
+                <p id="appendix-A.1.1.2-5.2.1">If the command reports errors like "the enum 'X' has been removed": The changes are non-backwards-compatible (NBC), requiring a MAJOR version increment and the NBC extension<a href="#appendix-A.1.1.2-5.2.1" class="pilcrow">¶</a></p>
 </li>
-            <li class="normal" id="appendix-A.1.1-14.3">
-              <p id="appendix-A.1.1-14.3.1">To distinguish BC from editorial changes, manually review the changes (editorial affects only documentation without semantic meaning changes)<a href="#appendix-A.1.1-14.3.1" class="pilcrow">¶</a></p>
+              <li class="normal" id="appendix-A.1.1.2-5.3">
+                <p id="appendix-A.1.1.2-5.3.1">To distinguish BC from editorial changes, manually review the changes (editorial affects only documentation without semantic meaning changes)<a href="#appendix-A.1.1.2-5.3.1" class="pilcrow">¶</a></p>
 </li>
-          </ul>
-<p id="appendix-A.1.1-15"><strong>Example Output</strong>:<a href="#appendix-A.1.1-15" class="pilcrow">¶</a></p>
-<div class="lang-text sourcecode" id="appendix-A.1.1-16">
+            </ul>
+<p id="appendix-A.1.1.2-6"><strong>Example Output</strong>:<a href="#appendix-A.1.1.2-6" class="pilcrow">¶</a></p>
+<div class="lang-text sourcecode" id="appendix-A.1.1.2-7">
 <pre>
 old-module.yang:15: error: the enum 'deprecated-value' has been removed
-</pre><a href="#appendix-A.1.1-16" class="pilcrow">¶</a>
+</pre><a href="#appendix-A.1.1.2-7" class="pilcrow">¶</a>
 </div>
-<p id="appendix-A.1.1-17">This indicates an NBC change has occurred.<a href="#appendix-A.1.1-17" class="pilcrow">¶</a></p>
+<p id="appendix-A.1.1.2-8">This indicates an NBC change has occurred.<a href="#appendix-A.1.1.2-8" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="generating-tree-diagrams-for-documentation">
+<section id="appendix-A.1.1.3">
+            <h5 id="name-generating-tree-diagrams-fo">
+<a href="#appendix-A.1.1.3" class="section-number selfRef">A.1.1.3. </a><a href="#name-generating-tree-diagrams-fo" class="section-name selfRef">Generating tree diagrams for documentation</a>
+            </h5>
+<p id="appendix-A.1.1.3-1">Pyang can be used to generate tree diagram output that conforms to <span>[<a href="#RFC8340" class="cite xref">RFC8340</a>]</span>.  The command below generates the tree diagram for <code>ietf-module-name.yang</code>, limited to a line length of 69 characters and writes it into the specified <code>output-file</code>.  The <code>tree-options</code> is based on the options in pyang that are prefixed with <code>--tree</code> and can be seen by running <code>pyang --help</code>.  Common options may include printing out grouping (<code>--tree-print-groupings</code>) or printing out structures (<code>--tree-print-structures</code>).<a href="#appendix-A.1.1.3-1" class="pilcrow">¶</a></p>
+<div class="lang-shell sourcecode" id="appendix-A.1.1.3-2">
+<pre>
+pyang -f tree --tree-line-length=69 -Werror -p &lt;dep-module-directory&gt; -o &lt;output-file&gt; &lt;tree-options&gt; ietf-module-name.yang
+</pre><a href="#appendix-A.1.1.3-2" class="pilcrow">¶</a>
+</div>
+</section>
+</div>
+<div id="consistent-formatting-of-yang-modules">
+<section id="appendix-A.1.1.4">
+            <h5 id="name-consistent-formatting-of-ya">
+<a href="#appendix-A.1.1.4" class="section-number selfRef">A.1.1.4. </a><a href="#name-consistent-formatting-of-ya" class="section-name selfRef">Consistent formatting of YANG modules</a>
+            </h5>
+<p id="appendix-A.1.1.4-1">Pyang can be used to reformat a YANG file, particularly fixing line length issues and correcting any indentation mistakes.  Some complex expressions, e.g., <code>must</code>, <code>when</code> and path statements may not be automatically split to the correct line length and may need to be done manually.  Running the basic syntax validation command on the output file will indicate whether any further manual line folding is required.<a href="#appendix-A.1.1.4-1" class="pilcrow">¶</a></p>
+<div class="lang-shell sourcecode" id="appendix-A.1.1.4-2">
+<pre>
+pyang -f yang --yang-line-length=69 --yang-canonical -Werror -p &lt;dep-module-directory&gt; -o &lt;output-file&gt; &lt;treeOpts&gt; ietf-module-name.yang
+</pre><a href="#appendix-A.1.1.4-2" class="pilcrow">¶</a>
+</div>
+</section>
+</div>
 </section>
 </div>
 <div id="yanglint">
@@ -2559,106 +2589,18 @@ yanglint -p /path/to/yang/modules module-name.yang
 </div>
 </section>
 </div>
-<div id="recommended-workflow">
-<section id="appendix-A.2">
-        <h3 id="name-recommended-workflow">
-<a href="#appendix-A.2" class="section-number selfRef">A.2. </a><a href="#name-recommended-workflow" class="section-name selfRef">Recommended Workflow</a>
-        </h3>
-<p id="appendix-A.2-1">The following workflow is recommended for validating and versioning YANG modules:<a href="#appendix-A.2-1" class="pilcrow">¶</a></p>
-<ol start="1" type="1" class="normal type-1" id="appendix-A.2-2">
-<li id="appendix-A.2-2.1">
-            <p id="appendix-A.2-2.1.1"><strong>Make Changes to Module</strong> - Update the YANG file based on registry changes or RFC Editor edits<a href="#appendix-A.2-2.1.1" class="pilcrow">¶</a></p>
-</li>
-          <li id="appendix-A.2-2.2">
-            <p id="appendix-A.2-2.2.1"><strong>Validate Syntax</strong> - Run pyang or yanglint to check for syntax errors:
-~~~~ shell
-pyang --ietf module-name.yang
-~~~~<a href="#appendix-A.2-2.2.1" class="pilcrow">¶</a></p>
-</li>
-          <li id="appendix-A.2-2.3">
-            <p id="appendix-A.2-2.3.1"><strong>Check for NBC Changes</strong> - Use pyang to compare with the previous version:
-~~~~ shell
-pyang --check-update-from old-version.yang new-version.yang
-~~~~<a href="#appendix-A.2-2.3.1" class="pilcrow">¶</a></p>
-</li>
-          <li id="appendix-A.2-2.4">
-            <p id="appendix-A.2-2.4.1"><strong>Review Tool Output</strong> - Analyze any reported issues:<a href="#appendix-A.2-2.4.1" class="pilcrow">¶</a></p>
-<ul class="normal">
-<li class="normal" id="appendix-A.2-2.4.2.1">
-                <p id="appendix-A.2-2.4.2.1.1">Errors from <code>--check-update-from</code> indicate NBC changes<a href="#appendix-A.2-2.4.2.1.1" class="pilcrow">¶</a></p>
-</li>
-              <li class="normal" id="appendix-A.2-2.4.2.2">
-                <p id="appendix-A.2-2.4.2.2.1">No errors indicate BC or editorial changes<a href="#appendix-A.2-2.4.2.2.1" class="pilcrow">¶</a></p>
-</li>
-            </ul>
-</li>
-          <li id="appendix-A.2-2.5">
-            <p id="appendix-A.2-2.5.1"><strong>Determine Version</strong> - Based on the tool output and manual review:<a href="#appendix-A.2-2.5.1" class="pilcrow">¶</a></p>
-<ul class="normal">
-<li class="normal" id="appendix-A.2-2.5.2.1">
-                <p id="appendix-A.2-2.5.2.1.1">NBC changes → MAJOR version increment (e.g., 1.0.0 → 2.0.0)<a href="#appendix-A.2-2.5.2.1.1" class="pilcrow">¶</a></p>
-</li>
-              <li class="normal" id="appendix-A.2-2.5.2.2">
-                <p id="appendix-A.2-2.5.2.2.1">BC changes (new functionality) → MINOR version increment (e.g., 1.0.0 → 1.1.0)<a href="#appendix-A.2-2.5.2.2.1" class="pilcrow">¶</a></p>
-</li>
-              <li class="normal" id="appendix-A.2-2.5.2.3">
-                <p id="appendix-A.2-2.5.2.3.1">Editorial changes (documentation only) → PATCH version increment (e.g., 1.0.0 → 1.0.1)<a href="#appendix-A.2-2.5.2.3.1" class="pilcrow">¶</a></p>
-</li>
-            </ul>
-</li>
-          <li id="appendix-A.2-2.6">
-            <p id="appendix-A.2-2.6.1"><strong>Add Revision Statement</strong> - Include:<a href="#appendix-A.2-2.6.1" class="pilcrow">¶</a></p>
-<ul class="normal">
-<li class="normal" id="appendix-A.2-2.6.2.1">
-                <p id="appendix-A.2-2.6.2.1.1">Current date<a href="#appendix-A.2-2.6.2.1.1" class="pilcrow">¶</a></p>
-</li>
-              <li class="normal" id="appendix-A.2-2.6.2.2">
-                <p id="appendix-A.2-2.6.2.2.1">New version number using <code>ysv:version</code><a href="#appendix-A.2-2.6.2.2.1" class="pilcrow">¶</a></p>
-</li>
-              <li class="normal" id="appendix-A.2-2.6.2.3">
-                <p id="appendix-A.2-2.6.2.3.1">Clear description of changes<a href="#appendix-A.2-2.6.2.3.1" class="pilcrow">¶</a></p>
-</li>
-              <li class="normal" id="appendix-A.2-2.6.2.4">
-                <p id="appendix-A.2-2.6.2.4.1"><code>rev:non-backwards-compatible</code> extension if NBC changes occurred<a href="#appendix-A.2-2.6.2.4.1" class="pilcrow">¶</a></p>
-</li>
-            </ul>
-</li>
-          <li id="appendix-A.2-2.7">
-            <p id="appendix-A.2-2.7.1"><strong>Final Validation</strong> - Validate the complete updated module:
-~~~~ shell
-pyang --ietf module-name.yang
-~~~~<a href="#appendix-A.2-2.7.1" class="pilcrow">¶</a></p>
-</li>
-          <li id="appendix-A.2-2.8">
-            <p id="appendix-A.2-2.8.1"><strong>Seek Review if Needed</strong> - Contact experts (<a href="#sec-additional-guidance" class="auto internal xref">Section 8</a>) if:<a href="#appendix-A.2-2.8.1" class="pilcrow">¶</a></p>
-<ul class="normal">
-<li class="normal" id="appendix-A.2-2.8.2.1">
-                <p id="appendix-A.2-2.8.2.1.1">Tool output is unclear or surprising<a href="#appendix-A.2-2.8.2.1.1" class="pilcrow">¶</a></p>
-</li>
-              <li class="normal" id="appendix-A.2-2.8.2.2">
-                <p id="appendix-A.2-2.8.2.2.1">Classification is uncertain<a href="#appendix-A.2-2.8.2.2.1" class="pilcrow">¶</a></p>
-</li>
-              <li class="normal" id="appendix-A.2-2.8.2.3">
-                <p id="appendix-A.2-2.8.2.3.1">Description changes may have altered semantic meaning<a href="#appendix-A.2-2.8.2.3.1" class="pilcrow">¶</a></p>
-</li>
-            </ul>
-</li>
-        </ol>
-</section>
-</div>
 <div id="tool-limitations">
-<section id="appendix-A.3">
+<section id="appendix-A.2">
         <h3 id="name-tool-limitations">
-<a href="#appendix-A.3" class="section-number selfRef">A.3. </a><a href="#name-tool-limitations" class="section-name selfRef">Tool Limitations</a>
+<a href="#appendix-A.2" class="section-number selfRef">A.2. </a><a href="#name-tool-limitations" class="section-name selfRef">Tool Limitations</a>
         </h3>
-<p id="appendix-A.3-1">While tools are valuable for YANG module validation and versioning, they have a couple of limitations relevant to their usage here:<a href="#appendix-A.3-1" class="pilcrow">¶</a></p>
-<p id="appendix-A.3-2"><strong>Limitation 1: Cannot Always Distinguish Editorial from BC/NBC Changes</strong><a href="#appendix-A.3-2" class="pilcrow">¶</a></p>
-<p id="appendix-A.3-3">Current tools cannot determine whether a description change is purely editorial (clarifying existing meaning), backwards-incompatible (changing meaning). Human or AI judgment is required to make this distinction.<a href="#appendix-A.3-3" class="pilcrow">¶</a></p>
-<p id="appendix-A.3-4">Example: Changing "Ethernet interface" to "Ethernet interface, includes all Ethernet interface speeds" could be editorial (if those variants were always included).  But changing an "ip" type from a desc<a href="#appendix-A.3-4" class="pilcrow">¶</a></p>
-<p id="appendix-A.3-5">or NBC (if changing the definition to include new Ethernet types that were not previously supported).<a href="#appendix-A.3-5" class="pilcrow">¶</a></p>
-<p id="appendix-A.3-6"><strong>Limitation 2: May Produce False Positives or False Negatives</strong><a href="#appendix-A.3-6" class="pilcrow">¶</a></p>
-<p id="appendix-A.3-7">Tool implementations may have bugs or may not cover all edge cases in the YANG versioning rules.  Generally, in any ambiguous cases, the tools are being designed to either explicitly flag this or choose the more impactful option.  It is assumed to be better for clients to potentially flag an NBC change that is not really there than to mistakenly flag an NBC change as only being a BC change.<a href="#appendix-A.3-7" class="pilcrow">¶</a></p>
-<p id="appendix-A.3-8">Hence the recommendation is to always review tool output critically and seek additional review (<a href="#sec-additional-guidance" class="auto internal xref">Section 8</a>) when uncertainty remains.<a href="#appendix-A.3-8" class="pilcrow">¶</a></p>
+<p id="appendix-A.2-1">While tools are valuable for YANG module validation and versioning, they have a couple of limitations relevant to their usage here:<a href="#appendix-A.2-1" class="pilcrow">¶</a></p>
+<p id="appendix-A.2-2"><strong>Limitation 1: Cannot Always Distinguish Editorial from BC/NBC Changes</strong><a href="#appendix-A.2-2" class="pilcrow">¶</a></p>
+<p id="appendix-A.2-3">Current tools cannot determine whether a description change is purely editorial (clarifying existing meaning), backwards-incompatible (changing meaning). Human or AI judgment is required to make this distinction.<a href="#appendix-A.2-3" class="pilcrow">¶</a></p>
+<p id="appendix-A.2-4">Example: Changing "Ethernet interface" to "Ethernet interface, includes all Ethernet interface speeds" could be editorial (if those variants were always included).  But changing an "ip" type from a description saying "IPv4 address or IPv6 address" to just "IPv4 address" would be regarded an a NBC change because the scope of the type has clearly changed and may impact users of that type.<a href="#appendix-A.2-4" class="pilcrow">¶</a></p>
+<p id="appendix-A.2-5"><strong>Limitation 2: May Produce False Positives or False Negatives</strong><a href="#appendix-A.2-5" class="pilcrow">¶</a></p>
+<p id="appendix-A.2-6">Tool implementations may have bugs or may not cover all edge cases in the YANG versioning rules.  Generally, in any ambiguous cases, the tools are being designed to either explicitly flag this or choose the more impactful option.  It is assumed to be better for clients to potentially flag an NBC change that is not really there than to mistakenly flag an NBC change as only being a BC change.<a href="#appendix-A.2-6" class="pilcrow">¶</a></p>
+<p id="appendix-A.2-7">Hence the recommendation is to always review tool output critically and seek additional review (<a href="#sec-additional-guidance" class="auto internal xref">Section 8</a>) when uncertainty remains.<a href="#appendix-A.2-7" class="pilcrow">¶</a></p>
 </section>
 </div>
 </section>
@@ -3042,7 +2984,8 @@ typedef interface-type {
 <pre>
 revision 2025-11-23 {
   ysv:version "2.4.0";
-  description "Deprecated 'oldtype' (99).";
+  description
+    "Deprecated 'oldtype' (99).";
 }
 
 typedef interface-type {
@@ -3066,11 +3009,12 @@ revision 2025-11-30 {
   ysv:version "3.0.0";
   rev:non-backwards-compatible;
   description
-    "Obsoleted removedtype interface. Support has been removed.";
+    "Obsoleted 'oldtype' (99).";
 }
 revision 2025-11-23 {
   ysv:version "2.4.0";
-  description "Deprecated 'oldtype' (99).";
+  description
+    "Deprecated 'oldtype' (99).";
 }
 
 typedef interface-type {
@@ -3105,16 +3049,19 @@ typedef interface-type {
 <pre>
 revision 2026-02-01 {
   ysv:version "2.2.0";
-  description "Added legacy-wireless identity.";
+  description
+    "Added 'legacy-wireless' identity.";
 }
 
 identity interface-type {
-  description "Base identity for interface types.";
+  description
+    "Base identity for interface types.";
 }
 
 identity legacy-wireless {
   base interface-type;
-  description "Legacy wireless interface.";
+  description
+    "Legacy wireless interface.";
 }
 </pre><a href="#appendix-B.2.5-9" class="pilcrow">¶</a>
 </div>
@@ -3124,11 +3071,13 @@ identity legacy-wireless {
 revision 2026-03-15 {
   ysv:version "3.0.0";
   rev:non-backwards-compatible;
-  description "Removed 'legacy-wireless' identity.";
+  description
+    "Removed 'legacy-wireless' identity.";
 }
 revision 2026-02-01 {
   ysv:version "2.2.0";
-  description "Added legacy-wireless identity.";
+  description
+    "Added 'legacy-wireless' identity.";
 }
 
 identity interface-type {
@@ -3155,7 +3104,7 @@ identity interface-type {
 <pre>
 revision 2026-04-01 {
   ysv:version "3.1.0";
-  description "Added old-gre identity.";
+  description "Added 'old-gre' identity.";
 }
 
 identity tunnel-type {
@@ -3174,7 +3123,7 @@ identity old-gre {
 revision 2026-05-01 {
   ysv:version "4.0.0";
   rev:non-backwards-compatible;
-  description "Renamed old-gre to gre.";
+  description "Renamed 'old-gre' identity to 'gre'.";
 }
 revision 2026-04-01 {
   ysv:version "3.1.0";
@@ -3210,7 +3159,7 @@ identity gre {
 <pre>
 revision 2026-01-10 {
   ysv:version "2.3.0";
-  description "Added multiple identiies.";
+  description "Added multiple identities.";
 }
 
 typedef interface-type {
@@ -3233,7 +3182,7 @@ typedef interface-type {
 revision 2026-02-20 {
   ysv:version "3.0.0";
   rev:non-backwards-compatible;
-  description "Changed fastether value to 215.";
+  description "Changed 'fastether' value to 215.";
 }
 revision 2026-01-10 {
   ysv:version "2.3.0";
@@ -3292,7 +3241,7 @@ revision 2026-02-05 {
 identity ethernet {
   base interface-type;
   description
-    "Ethernet interface, including 10BASE-T, 100BASE-T, and
+    "Ethernet interface, includes 10BASE-T, 100BASE-T, and
      1000BASE-T variants.";
 }
 </pre><a href="#appendix-B.2.8-10" class="pilcrow">¶</a>
@@ -3315,7 +3264,7 @@ identity ethernet {
 <pre>
 revision 2026-03-01 {
   ysv:version "2.2.0";
-  description "Defined ip identity.";
+  description "Defined 'ip' identity.";
 }
 
 identity ip {
@@ -3334,7 +3283,7 @@ revision 2026-04-01 {
 }
 revision 2026-03-01 {
   ysv:version "2.2.0";
-  description "Defined ip identity.";
+  description "Defined 'ip' identity.";
 }
 
 identity ipv {

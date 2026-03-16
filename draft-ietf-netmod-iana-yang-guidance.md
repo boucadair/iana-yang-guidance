@@ -33,6 +33,7 @@ author:
 normative:
   RFC6020:
   RFC7950:
+  RFC8340:
   I-D.ietf-netmod-yang-module-versioning:
   I-D.ietf-netmod-yang-semver:
   I-D.ietf-netmod-rfc8407bis:
@@ -80,6 +81,7 @@ This document provides guidance to the RFC Editor and IANA on managing YANG modu
 1. This document is informational, is it appropriate to use RFC 2119 language?
 1. For the RFC Editor and ADs, do we want to allow the RFC Editor to apply errata to IETF YANG modules.
 1. Should RFC8126-bis have any guidance for IANA maintained YANG modules derived from IANA registries?
+1. For section {{sec-background}}, should we give examples of the rules, or just reference the module versioning draft [Reshad]?
 
 # For Reviewers of this document
 
@@ -164,31 +166,27 @@ Pre-release versions (versions with MAJOR = 0, e.g., "0.2.0", or with a pre-rele
 
 The rules that determine whether a change to a YANG module is backwards-compatible or non-backwards-compatible are defined in Section 3.1 of {{I-D.ietf-netmod-yang-module-versioning}}. These rules refine and extend the update rules specified in Section 11 of {{RFC7950}}.
 
-Section 3.1.1 of {{I-D.ietf-netmod-yang-module-versioning}} defines backwards-compatible changes, which include:
+Section 3.1.1 of {{I-D.ietf-netmod-yang-module-versioning}} defines backwards-compatible changes, examples include:
 
 - Adding new schema nodes (e.g., new enum values, identities, leafs, containers)
-- Adding new optional features or extensions
 - Changing the status of a schema node from "current" to "deprecated" (e.g., by adding a ```status: "deprecated"``` statement)
 - Adding or updating "description" and "reference" statements (provided the semantic meaning is unchanged)
 - Expanding constraints (e.g., widening ranges, adding enum values)
 
-Section 3.1.2 of {{I-D.ietf-netmod-yang-module-versioning}} defines non-backwards-compatible changes, which include:
+Section 3.1.2 of {{I-D.ietf-netmod-yang-module-versioning}} defines non-backwards-compatible changes, examples include:
 
 - Removing schema nodes (unless they already have status "obsolete")
 - Changing the status of a schema node from "current" or "deprecated" to "obsolete"
 - Renaming schema nodes or changing their identifiers
 - Changing data types in ways that alter syntax or semantics
 - Changing numeric values assigned to enumerations
-- Restricting constraints (e.g., narrowing ranges, removing enum values)
 - Modifying "description" statements in ways that change semantic meaning or behavior
 
-In addition, section 4.4 of {{I-D.ietf-netmod-yang-semver}} defines editorial changes as the subset of backwards-compatible changes that have no impact on the semantics or syntax of a YANG module, which include:
+In addition, section 4.4 of {{I-D.ietf-netmod-yang-semver}} defines editorial changes as the subset of backwards-compatible changes that have no impact on the semantics or syntax of a YANG module, examples include:
 
 - Corrections to comments, descriptions, or references that do not change the semantic meaning
 - Formatting improvements such as whitespace or indentation changes
-- Corrections to typographical errors in description text
 - Updates to contact information or copyright statements
-- Changes to import statements that do not affect module functionality (e.g., updating import prefixes for readability)
 
 ## The rev:non-backwards-compatible Extension
 
@@ -259,7 +257,7 @@ These editorial changes are appropriate and expected. The RFC Editor SHOULD:
 
 - Coordinate with document authors regarding any substantive changes
 - Ensure that only editorial changes (as defined in {{sec-background}}) are made without author consultation
-- If more significant changes are needed that might be backwards-compatible or non-backwards-compatible, consult with the authors to determine the correct version number and whether the `rev:non-backwards-compatible` extension is required
+- If more significant changes are needed that might be backwards-compatible or non-backwards-compatible, consult with the authors to determine the correct version number and whether the `rev:non-backwards-compatible` extension is required.
 
 ### Step 3: Finalizing the Module Version
 
@@ -424,7 +422,7 @@ pyang --check-update-from iana-if-type@2025-10-15.yang \
                           iana-if-type@2025-11-15.yang
 ~~~~
 
-If the tool reports NBC violations, the MAJOR version must be incremented and the `rev:non-backwards-compatible` extension must be added.
+If the tool reports NBC violations, the MAJOR version must be incremented and the `rev:non-backwards-compatible` extension MUST be added.
 
 If the tool reports no violations, determine whether the change is backwards-compatible (BC) or editorial:
 
@@ -592,33 +590,34 @@ This appendix describes tooling available to assist the RFC Editor and IANA in v
 
 **Primary Use Cases**:
 
-- Validating YANG module syntax and compliance with IETF conventions
-- Detecting non-backwards-compatible changes between module versions
-- Generating tree diagrams for documentation
+1. Validating YANG module syntax and compliance with IETF conventions
+1. Detecting non-backwards-compatible changes between module versions
+1. Generating tree diagrams for documentation
+1. Formatting YANG modules in a consistent way prior to publication
 
 **Installation**: pyang is available via PyPI (`pip install pyang`) or from <https://github.com/mbj4668/pyang>.  It is recommended to periodically check and update the version to pick up bugfixes and new functionality (which could include stricter checks).
 
-**Basic YANG Syntax Validation**:
+**Note to RFC Editor and reviewers, some of the tooling enhancements documented here are not yet been merged into the master pyang repository, so depending on publication timing we need to add further references.**
+
+To ensure that pyang correctly processes the YANG files, then the correct versions of any YANG module dependencies must also be used, this is often the latest version of the published YANG modules, but if a draft contains a set of YANG modules, or if there are set of drafts with YANG modules being published together then all the YANG modules in those drafts MUST be extracted together and validated.  These dependent YANG modules can either be stored in the same directory as the YANG module being validated/checked, or they can be stored in a separate directory and passed using the ```-p``` argument to provide a path to the directory.
+
+#### Basic YANG Syntax Validation
+
+This command below validates the module syntax and checks compliance with IETF-specific conventions. The output will show any errors or warnings. IETF and IANA modules SHOULD have no errors or warnings before publication.
 
 ~~~~ shell
-pyang --ietf ietf-module-name.yang
+pyang --ietf --strict --max-line-length=69 -Werror -p <dep-module-directory> ietf-module-name.yang
 ~~~~
 
-or
+#### Checking for NBC Changes
 
-~~~~ shell
-pyang --strict iana-module-name.yang
-~~~~
-
-This command validates the module syntax and checks compliance with IETF-specific conventions. Output will show any errors or warnings. IETF and IANA modules SHOULD have no errors or warnings before publication.
-
-**Checking for NBC Changes**:
+This command compares two versions of a module and reports any violations of the backwards-compatible update rules defined in {{I-D.ietf-netmod-yang-module-versioning}}.
 
 ~~~~ shell
 pyang --check-update-from old-module.yang new-module.yang
 ~~~~
 
-This command compares two versions of a module and reports any violations of the backwards-compatible update rules defined in {{I-D.ietf-netmod-yang-module-versioning}}.
+This command validates the module syntax and checks compliance with IETF-specific conventions. The output will show any errors or warnings. IETF and IANA modules SHOULD have no errors or warnings before publication.
 
 **Interpreting Output**:
 
@@ -633,6 +632,23 @@ old-module.yang:15: error: the enum 'deprecated-value' has been removed
 ~~~~
 
 This indicates an NBC change has occurred.
+
+#### Generating tree diagrams for documentation
+
+Pyang can be used to generate tree diagram output that conforms to {{RFC8340}}.  The command below generates the tree diagram for `ietf-module-name.yang`, limited to a line length of 69 characters and writes it into the specified ```output-file```.  The ```tree-options``` is based on the options in pyang that are prefixed with ```--tree``` and can be seen by running ```pyang --help```.  Common options may include printing out grouping (```--tree-print-groupings```) or printing out structures (```--tree-print-structures```).
+
+~~~~ shell
+pyang -f tree --tree-line-length=69 -Werror -p <dep-module-directory> -o <output-file> <tree-options> ietf-module-name.yang
+~~~~
+
+
+#### Consistent formatting of YANG modules
+
+Pyang can be used to reformat a YANG file, particularly fixing line length issues and correcting any indentation mistakes.  Some complex expressions, e.g., ```must```, ```when``` and path statements may not be automatically split to the correct line length and may need to be done manually.  Running the basic syntax validation command on the output file will indicate whether any further manual line folding is required.
+
+~~~~ shell
+pyang -f yang --yang-line-length=69 --yang-canonical -Werror -p <dep-module-directory> -o <output-file> <treeOpts> ietf-module-name.yang
+~~~~
 
 ### yanglint
 
@@ -676,6 +692,7 @@ Access the web interface at <https://www.yangcatalog.org> and use the "Validator
 
 The online tools provide visual feedback on validation results and module comparisons. The impact analysis tool can show which other modules depend on a given module, helping assess the impact of changes.
 
+<!--
 ## Recommended Workflow
 
 The following workflow is recommended for validating and versioning YANG modules:
@@ -684,16 +701,16 @@ The following workflow is recommended for validating and versioning YANG modules
 
 2. **Validate Syntax** - Run pyang or yanglint to check for syntax errors:
    ~~~~ shell
-   pyang --ietf module-name.yang
+   pyang - -ietf module-name.yang
    ~~~~
 
 3. **Check for NBC Changes** - Use pyang to compare with the previous version:
    ~~~~ shell
-   pyang --check-update-from old-version.yang new-version.yang
+   pyang - -check-update-from old-version.yang new-version.yang
    ~~~~
 
 4. **Review Tool Output** - Analyze any reported issues:
-   - Errors from `--check-update-from` indicate NBC changes
+   - Errors from `- -check-update-from` indicate NBC changes
    - No errors indicate BC or editorial changes
 
 5. **Determine Version** - Based on the tool output and manual review:
@@ -709,13 +726,14 @@ The following workflow is recommended for validating and versioning YANG modules
 
 7. **Final Validation** - Validate the complete updated module:
    ~~~~ shell
-   pyang --ietf module-name.yang
+   pyang - -ietf module-name.yang
    ~~~~
 
 8. **Seek Review if Needed** - Contact experts ({{sec-additional-guidance}}) if:
    - Tool output is unclear or surprising
    - Classification is uncertain
    - Description changes may have altered semantic meaning
+-->
 
 ## Tool Limitations
 
@@ -725,10 +743,7 @@ While tools are valuable for YANG module validation and versioning, they have a 
 
 Current tools cannot determine whether a description change is purely editorial (clarifying existing meaning), backwards-incompatible (changing meaning). Human or AI judgment is required to make this distinction.
 
-Example: Changing "Ethernet interface" to "Ethernet interface, includes all Ethernet interface speeds" could be editorial (if those variants were always included).  But changing an "ip" type from a desc
-
-
- or NBC (if changing the definition to include new Ethernet types that were not previously supported).
+Example: Changing "Ethernet interface" to "Ethernet interface, includes all Ethernet interface speeds" could be editorial (if those variants were always included).  But changing an "ip" type from a description saying "IPv4 address or IPv6 address" to just "IPv4 address" would be regarded an a NBC change because the scope of the type has clearly changed and may impact users of that type.
 
 **Limitation 2: May Produce False Positives or False Negatives**
 
@@ -984,7 +999,8 @@ Previous version (*2.4.0*):
 ~~~~ yang
 revision 2025-11-23 {
   ysv:version "2.4.0";
-  description "Deprecated 'oldtype' (99).";
+  description
+    "Deprecated 'oldtype' (99).";
 }
 
 typedef interface-type {
@@ -1008,11 +1024,12 @@ revision 2025-11-30 {
   ysv:version "3.0.0";
   rev:non-backwards-compatible;
   description
-    "Obsoleted removedtype interface. Support has been removed.";
+    "Obsoleted 'oldtype' (99).";
 }
 revision 2025-11-23 {
   ysv:version "2.4.0";
-  description "Deprecated 'oldtype' (99).";
+  description
+    "Deprecated 'oldtype' (99).";
 }
 
 typedef interface-type {
@@ -1049,16 +1066,19 @@ Previous version (*2.2.0*):
 ~~~~ yang
 revision 2026-02-01 {
   ysv:version "2.2.0";
-  description "Added legacy-wireless identity.";
+  description
+    "Added 'legacy-wireless' identity.";
 }
 
 identity interface-type {
-  description "Base identity for interface types.";
+  description
+    "Base identity for interface types.";
 }
 
 identity legacy-wireless {
   base interface-type;
-  description "Legacy wireless interface.";
+  description
+    "Legacy wireless interface.";
 }
 ~~~~
 
@@ -1068,11 +1088,13 @@ New version (*3.0.0*) after removal:
 revision 2026-03-15 {
   ysv:version "3.0.0";
   rev:non-backwards-compatible;
-  description "Removed 'legacy-wireless' identity.";
+  description
+    "Removed 'legacy-wireless' identity.";
 }
 revision 2026-02-01 {
   ysv:version "2.2.0";
-  description "Added legacy-wireless identity.";
+  description
+    "Added 'legacy-wireless' identity.";
 }
 
 identity interface-type {
@@ -1101,7 +1123,7 @@ Previous version (*3.1.0*):
 ~~~~ yang
 revision 2026-04-01 {
   ysv:version "3.1.0";
-  description "Added old-gre identity.";
+  description "Added 'old-gre' identity.";
 }
 
 identity tunnel-type {
@@ -1120,7 +1142,7 @@ New version (*4.0.0*) after rename:
 revision 2026-05-01 {
   ysv:version "4.0.0";
   rev:non-backwards-compatible;
-  description "Renamed old-gre to gre.";
+  description "Renamed 'old-gre' identity to 'gre'.";
 }
 revision 2026-04-01 {
   ysv:version "3.1.0";
@@ -1158,7 +1180,7 @@ Previous version (*2.3.0*):
 ~~~~ yang
 revision 2026-01-10 {
   ysv:version "2.3.0";
-  description "Added multiple identiies.";
+  description "Added multiple identities.";
 }
 
 typedef interface-type {
@@ -1181,7 +1203,7 @@ New version (*3.0.0*) after value change:
 revision 2026-02-20 {
   ysv:version "3.0.0";
   rev:non-backwards-compatible;
-  description "Changed fastether value to 215.";
+  description "Changed 'fastether' value to 215.";
 }
 revision 2026-01-10 {
   ysv:version "2.3.0";
@@ -1241,7 +1263,7 @@ revision 2026-02-05 {
 identity ethernet {
   base interface-type;
   description
-    "Ethernet interface, including 10BASE-T, 100BASE-T, and
+    "Ethernet interface, includes 10BASE-T, 100BASE-T, and
      1000BASE-T variants.";
 }
 ~~~~
@@ -1265,7 +1287,7 @@ Previous version (*2.2.0*):
 ~~~~ yang
 revision 2026-03-01 {
   ysv:version "2.2.0";
-  description "Defined ip identity.";
+  description "Defined 'ip' identity.";
 }
 
 identity ip {
@@ -1284,7 +1306,7 @@ revision 2026-04-01 {
 }
 revision 2026-03-01 {
   ysv:version "2.2.0";
-  description "Defined ip identity.";
+  description "Defined 'ip' identity.";
 }
 
 identity ipv {

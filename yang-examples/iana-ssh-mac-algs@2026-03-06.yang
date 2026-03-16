@@ -43,6 +43,7 @@ module iana-ssh-mac-algs {
      https://www.iana.org/assignments/yang-parameters.";
 
   revision 2026-03-06 {
+    ysv:version "2.0.0";
     description
       "Marked 'hmac-sha1' as obsolete";
   }
@@ -111,19 +112,20 @@ module iana-ssh-mac-algs {
              Layer Protocol";
       }
 
-      enum AEAD_AES_256_GCM {
-        description
-          "Enumeration for the 'AEAD_AES_256_GCM' algorithm. Section
-           6.2";
-        reference
-          "RFC 5647:
-             AES Galois Counter Mode for the Secure Shell Transport
-             Layer Protocol";
-      }
+      // enum AEAD_AES_256_GCM {
+      //   description
+      //     "Enumeration for the 'AEAD_AES_256_GCM' algorithm. Section
+      //      6.2";
+      //   reference
+      //     "RFC 5647:
+      //        AES Galois Counter Mode for the Secure Shell Transport
+      //        Layer Protocol";
+      // }
 
       enum hmac-sha2-256 {
+        status obsolete;
         description
-          "Enumeration for the 'hmac-sha2-256' algorithm. Section 2, some change to the description.";
+          "Enumeration for the 'hmac-sha2-256' algorithm. Section 2";
         reference
           "RFC 6668:
              SHA-2 Data Integrity Verification for the Secure Shell
@@ -131,9 +133,8 @@ module iana-ssh-mac-algs {
       }
 
       enum hmac-sha2-512 {
-        status obsolete;
         description
-          "Enumeration for the 'hmac-sha2-512' algorithm. Section 2";
+          "Enumeration for the 'hmac-sha2-512' algorithm. Section 2, sss";
         reference
           "RFC 6668:
              SHA-2 Data Integrity Verification for the Secure Shell

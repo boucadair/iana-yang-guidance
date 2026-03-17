@@ -22,7 +22,7 @@ About This Document
    This note is to be removed before publishing as an RFC.
 
    The latest revision of this draft can be found at
-   https://rgwilton.github.io/iana-yang-guidance/draft-verdt-iana-yang-
+   https://rgwilton.github.io/iana-yang-guidance/draft-ietf-iana-yang-
    guidance.html.  Status information for this document may be found at
    https://datatracker.ietf.org/doc/draft-ietf-netmod-iana-yang-
    guidance/.
@@ -221,6 +221,12 @@ Table of Contents
 
 4.  Conventions and Definitions
 
+   The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
+   "SHOULD", "SHOULD NOT", "RECOMMENDED", "NOT RECOMMENDED", "MAY", and
+   "OPTIONAL" in this document are to be interpreted as described in
+   BCP 14 [RFC2119] [RFC8174] when, and only when, they appear in all
+   capitals, as shown here.
+
    This document uses the following terminology from
    [I-D.ietf-netmod-yang-module-versioning]:
 
@@ -296,13 +302,13 @@ Table of Contents
    *  A non-backwards-compatible change would update it to _2.0.0_.
 
    Pre-release versions (versions with MAJOR = 0, e.g., "0.2.0", or with
-   a pre-release suffix, e.g., "1.3.0-draft-verdt-iana-yang-guidance")
-   indicate modules that have not completed the IETF standardization
-   process and whose revision content is subject to change in non-
-   backwards-compatible ways without corresponding changes to the major
-   version number.  Published IETF and IANA YANG modules should always
-   be at version "1.0.0" or later, and should never include a pre-
-   release suffix.  The initial published version should be "1.0.0".
+   a pre-release suffix, e.g., "1.3.0-04") indicate modules that have
+   not completed the IETF standardization process and whose revision
+   content is subject to change in non-backwards-compatible ways without
+   corresponding changes to the major version number.  Published IETF
+   and IANA YANG modules should always be at version "1.0.0" or later,
+   and should never include a pre-release suffix.  The initial published
+   version should be "1.0.0".
 
 5.2.  Backwards Compatibility Rules
 
@@ -423,7 +429,7 @@ Table of Contents
 
    1.  *YANG Semver Version*: Every module MUST include a semantic
        version number using the ysv:version statement in its most recent
-       revision.  The version MUST be correct relative to any previously
+       revision.  The version MUST be correct relative to any previous
        version of the same module published either by the RFC editor or
        on the IANA website.
 
@@ -511,7 +517,7 @@ Table of Contents
       YANG modules in -bis documents:
 
       -  Uses pyang (Appendix A.1.1.3) to check that an appropriate new
-         version has been choosen based on the relationship to any
+         version has been chosen based on the relationship to any
          previously published version of the module.  Tooling is not
          infallible, so if the suggested version by the tooling is
          unexpected then please reach out for additional guidance, as
@@ -763,7 +769,7 @@ Table of Contents
 
    Use validation tools, as per Appendix A.1.1.1, to ensure the updated
    module is syntactically correct.  Since these modules are simple,
-   just checking with the _pyang_ tool is sufficent, but _yanglint_
+   just checking with the _pyang_ tool is sufficent but _yanglint_
    (Appendix A.1.2) may be used as an alternative.
 
 7.4.6.  Step 6: Seek additional help if Needed
@@ -1000,6 +1006,11 @@ Table of Contents
               <https://www.iana.org/assignments/yang-parameters/yang-
               parameters.xhtml>.
 
+   [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
+              Requirement Levels", BCP 14, RFC 2119,
+              DOI 10.17487/RFC2119, March 1997,
+              <https://www.rfc-editor.org/rfc/rfc2119>.
+
    [RFC6020]  Bjorklund, M., Ed., "YANG - A Data Modeling Language for
               the Network Configuration Protocol (NETCONF)", RFC 6020,
               DOI 10.17487/RFC6020, October 2010,
@@ -1008,6 +1019,10 @@ Table of Contents
    [RFC7950]  Bjorklund, M., Ed., "The YANG 1.1 Data Modeling Language",
               RFC 7950, DOI 10.17487/RFC7950, August 2016,
               <https://www.rfc-editor.org/rfc/rfc7950>.
+
+   [RFC8174]  Leiba, B., "Ambiguity of Uppercase vs Lowercase in RFC
+              2119 Key Words", BCP 14, RFC 8174, DOI 10.17487/RFC8174,
+              May 2017, <https://www.rfc-editor.org/rfc/rfc8174>.
 
    [RFC8340]  Bjorklund, M. and L. Berger, Ed., "YANG Tree Diagrams",
               BCP 215, RFC 8340, DOI 10.17487/RFC8340, March 2018,
@@ -1279,7 +1294,7 @@ A.2.  Tool Limitations
    includes all Ethernet interface speeds" could be editorial (if those
    variants were always included).  But changing an "ip" type from a
    description saying "IPv4 address or IPv6 address" to just "IPv4
-   address" would be regarded an a NBC change because the scope of the
+   address" would be regarded as an NBC change because the scope of the
    type has clearly changed and may impact users of that type.
 
    *Limitation 2: May Produce False Positives or False Negatives*
@@ -1309,7 +1324,7 @@ B.1.  Quick Reference Table
    numeric identifier, description, status, and any reference fields as
    part of the YANG entries.  If additional fields from the registry are
    used in the YANG module (e.g., perhaps the YANG description is
-   constucted from multiple registry fields) then any changes to those
+   constructed from multiple registry fields) then any changes to those
    fields will require a new version of the YANG module to be published
    and an appropriate new version number, chosen based on the actual
    change to the YANG module.
@@ -1428,7 +1443,7 @@ B.2.1.  Scenario 1: Adding a New Registry Entry
    *NBC Extension Required*: No
 
    *Rationale*: Adding a new type is backwards compatible because it
-   cannot break backwards-compatability of existing implementations.
+   cannot break backwards-compatibility of existing implementations.
 
    *Example*:
 
@@ -1812,7 +1827,7 @@ B.2.7.  Scenario 7: Changing a Value Number
    }
    revision 2026-01-10 {
      ysv:version "2.3.0";
-     description "Added multiple identiies.";
+     description "Added multiple identities.";
    }
 
    typedef interface-type {

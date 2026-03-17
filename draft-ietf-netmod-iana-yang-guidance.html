@@ -1052,7 +1052,7 @@ svg :is([fill="white"], [fill^="#fff"]) {
 </tr></thead>
 <tfoot><tr>
 <td class="left">Wilton</td>
-<td class="center">Expires 17 September 2026</td>
+<td class="center">Expires 18 September 2026</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -1065,12 +1065,12 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <dd class="internet-draft">draft-ietf-netmod-iana-yang-guidance-latest</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2026-03-16" class="published">16 March 2026</time>
+<time datetime="2026-03-17" class="published">17 March 2026</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Informational</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2026-09-17">17 September 2026</time></dd>
+<dd class="expires"><time datetime="2026-09-18">18 September 2026</time></dd>
 <dt class="label-authors">Author:</dt>
 <dd class="authors">
 <div class="author">
@@ -1120,7 +1120,7 @@ svg :is([fill="white"], [fill^="#fff"]) {
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 17 September 2026.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 18 September 2026.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -1385,13 +1385,10 @@ svg :is([fill="white"], [fill^="#fff"]) {
           <p id="section-1-1.2.1">This document is informational, is it appropriate to use RFC 2119 language?<a href="#section-1-1.2.1" class="pilcrow">¶</a></p>
 </li>
         <li id="section-1-1.3">
-          <p id="section-1-1.3.1">For the RFC Editor and ADs, do we want to allow the RFC Editor to apply errata to IETF YANG modules.<a href="#section-1-1.3.1" class="pilcrow">¶</a></p>
+          <p id="section-1-1.3.1">For the RFC Editor and ADs, do we want to allow the RFC Editor to apply errata to IETF YANG modules?<a href="#section-1-1.3.1" class="pilcrow">¶</a></p>
 </li>
         <li id="section-1-1.4">
-          <p id="section-1-1.4.1">Should RFC8126-bis have any guidance for IANA maintained YANG modules derived from IANA registries?<a href="#section-1-1.4.1" class="pilcrow">¶</a></p>
-</li>
-        <li id="section-1-1.5">
-          <p id="section-1-1.5.1">For section <a href="#sec-background" class="auto internal xref">Section 5</a>, should we give examples of the rules, or just reference the module versioning draft [Reshad]?<a href="#section-1-1.5.1" class="pilcrow">¶</a></p>
+          <p id="section-1-1.4.1">For <a href="#sec-background" class="auto internal xref">Section 5</a>, should we give examples of the rules, or just reference the module versioning draft [Reshad]?<a href="#section-1-1.4.1" class="pilcrow">¶</a></p>
 </li>
       </ol>
 </section>
@@ -2445,7 +2442,7 @@ Thank you for your guidance.
               <p id="appendix-A.1.1-3.1.1">Validating YANG module syntax and compliance with IETF conventions<a href="#appendix-A.1.1-3.1.1" class="pilcrow">¶</a></p>
 </li>
             <li id="appendix-A.1.1-3.2">
-              <p id="appendix-A.1.1-3.2.1">Detecting non-backwards-compatible changes between module versions<a href="#appendix-A.1.1-3.2.1" class="pilcrow">¶</a></p>
+              <p id="appendix-A.1.1-3.2.1">Suggesting proposed next version when updating a YANG module<a href="#appendix-A.1.1-3.2.1" class="pilcrow">¶</a></p>
 </li>
             <li id="appendix-A.1.1-3.3">
               <p id="appendix-A.1.1-3.3.1">Generating tree diagrams for documentation<a href="#appendix-A.1.1-3.3.1" class="pilcrow">¶</a></p>
@@ -2470,37 +2467,64 @@ pyang --ietf --strict --max-line-length=69 -Werror -p &lt;dep-module-directory&g
 </div>
 </section>
 </div>
-<div id="checking-for-nbc-changes">
+<div id="suggesting-proposed-next-version-when-updating-a-yang-module">
 <section id="appendix-A.1.1.2">
-            <h5 id="name-checking-for-nbc-changes">
-<a href="#appendix-A.1.1.2" class="section-number selfRef">A.1.1.2. </a><a href="#name-checking-for-nbc-changes" class="section-name selfRef">Checking for NBC Changes</a>
+            <h5 id="name-suggesting-proposed-next-ve">
+<a href="#appendix-A.1.1.2" class="section-number selfRef">A.1.1.2. </a><a href="#name-suggesting-proposed-next-ve" class="section-name selfRef">Suggesting proposed next version when updating a YANG module</a>
             </h5>
-<p id="appendix-A.1.1.2-1">This command compares two versions of a module and reports any violations of the backwards-compatible update rules defined in <span>[<a href="#I-D.ietf-netmod-yang-module-versioning" class="cite xref">I-D.ietf-netmod-yang-module-versioning</a>]</span>.<a href="#appendix-A.1.1.2-1" class="pilcrow">¶</a></p>
-<div class="lang-shell sourcecode" id="appendix-A.1.1.2-2">
+<p id="appendix-A.1.1.2-1">Pyang can be used to compare the changes between two YANG module versions and either validate that a suitable next version number has been used, or to suggest what the appropriate next version should be, or if further manual checks should be performed, e.g., for changes to description statements.<a href="#appendix-A.1.1.2-1" class="pilcrow">¶</a></p>
+<p id="appendix-A.1.1.2-2">If the new module version already includes a version statement for the latest version then it will check whether the version used matches the expected version that has been calculated based on the changes between the two module versions.  Otherwise, if the latest version does not contain a version statement then it will suggest the new version that should be used.<a href="#appendix-A.1.1.2-2" class="pilcrow">¶</a></p>
+<div class="lang-shell sourcecode" id="appendix-A.1.1.2-3">
 <pre>
-pyang --check-update-from old-module.yang new-module.yang
-</pre><a href="#appendix-A.1.1.2-2" class="pilcrow">¶</a>
+pyang --check-update-semver --check-update-from module-name@old-version.yang module-name@new-version.yang
+</pre><a href="#appendix-A.1.1.2-3" class="pilcrow">¶</a>
 </div>
-<p id="appendix-A.1.1.2-3">This command validates the module syntax and checks compliance with IETF-specific conventions. The output will show any errors or warnings. IETF and IANA modules SHOULD have no errors or warnings before publication.<a href="#appendix-A.1.1.2-3" class="pilcrow">¶</a></p>
-<p id="appendix-A.1.1.2-4"><strong>Interpreting Output</strong>:<a href="#appendix-A.1.1.2-4" class="pilcrow">¶</a></p>
+<p id="appendix-A.1.1.2-4"><strong>Interpreting Tool Output</strong><a href="#appendix-A.1.1.2-4" class="pilcrow">¶</a></p>
+<p id="appendix-A.1.1.2-5">The command output:<a href="#appendix-A.1.1.2-5" class="pilcrow">¶</a></p>
 <ul class="normal">
-<li class="normal" id="appendix-A.1.1.2-5.1">
-                <p id="appendix-A.1.1.2-5.1.1">If the command reports no errors: The changes are backwards-compatible (BC) or editorial<a href="#appendix-A.1.1.2-5.1.1" class="pilcrow">¶</a></p>
+<li class="normal" id="appendix-A.1.1.2-6.1">
+                <p id="appendix-A.1.1.2-6.1.1">will suggested the next YANG Semver, based on the changes.<a href="#appendix-A.1.1.2-6.1.1" class="pilcrow">¶</a></p>
 </li>
-              <li class="normal" id="appendix-A.1.1.2-5.2">
-                <p id="appendix-A.1.1.2-5.2.1">If the command reports errors like "the enum 'X' has been removed": The changes are non-backwards-compatible (NBC), requiring a MAJOR version increment and the NBC extension<a href="#appendix-A.1.1.2-5.2.1" class="pilcrow">¶</a></p>
+              <li class="normal" id="appendix-A.1.1.2-6.2">
+                <p id="appendix-A.1.1.2-6.2.1">indicate whether the <code>rev:non-backwards-compatible</code> annotation is needed.<a href="#appendix-A.1.1.2-6.2.1" class="pilcrow">¶</a></p>
 </li>
-              <li class="normal" id="appendix-A.1.1.2-5.3">
-                <p id="appendix-A.1.1.2-5.3.1">To distinguish BC from editorial changes, manually review the changes (editorial affects only documentation without semantic meaning changes)<a href="#appendix-A.1.1.2-5.3.1" class="pilcrow">¶</a></p>
+              <li class="normal" id="appendix-A.1.1.2-6.3">
+                <p id="appendix-A.1.1.2-6.3.1">highlight any non-backwards-compatible changes, which are reported as errors.<a href="#appendix-A.1.1.2-6.3.1" class="pilcrow">¶</a></p>
+</li>
+              <li class="normal" id="appendix-A.1.1.2-6.4">
+                <p id="appendix-A.1.1.2-6.4.1">indicate if there are changes to any statements, e.g., description, that require further analysis to decide whether a semantic change has occurrred and hence if the change is not-backwards-compatible rather than editorial.<a href="#appendix-A.1.1.2-6.4.1" class="pilcrow">¶</a></p>
 </li>
             </ul>
-<p id="appendix-A.1.1.2-6"><strong>Example Output</strong>:<a href="#appendix-A.1.1.2-6" class="pilcrow">¶</a></p>
-<div class="lang-text sourcecode" id="appendix-A.1.1.2-7">
+<p id="appendix-A.1.1.2-7"><strong>Example Tool Output 1</strong>:<a href="#appendix-A.1.1.2-7" class="pilcrow">¶</a></p>
+<p id="appendix-A.1.1.2-8">This example illustrates what the expected output would be for an update to a YANG module that is derived from an IANA registry update that defines a new enum or identity.  This is a minor version change and hence the version change recommended by the tool is from 1.0.0 → 1.1.0.<a href="#appendix-A.1.1.2-8" class="pilcrow">¶</a></p>
+<div class="lang-text sourcecode" id="appendix-A.1.1.2-9">
 <pre>
-old-module.yang:15: error: the enum 'deprecated-value' has been removed
-</pre><a href="#appendix-A.1.1.2-7" class="pilcrow">¶</a>
+SUGGESTED-NEXT-YANG-SEMVER: 1.1.0
+</pre><a href="#appendix-A.1.1.2-9" class="pilcrow">¶</a>
 </div>
-<p id="appendix-A.1.1.2-8">This indicates an NBC change has occurred.<a href="#appendix-A.1.1.2-8" class="pilcrow">¶</a></p>
+<p id="appendix-A.1.1.2-10"><strong>Example Tool Output 2</strong>:<a href="#appendix-A.1.1.2-10" class="pilcrow">¶</a></p>
+<p id="appendix-A.1.1.2-11">This example output below due to deleting an enum entry indicates an NBC change has occurred. Hence the tool recommends a major version number change from 1.0.0 → 2.0.0 and the addition of the <code>rev:non-backwards-compatible</code> statement.<a href="#appendix-A.1.1.2-11" class="pilcrow">¶</a></p>
+<div class="lang-text sourcecode" id="appendix-A.1.1.2-12">
+<pre>
+SUGGESTED-NEXT-YANG-SEMVER: 2.0.0
+NBC-CHANGE(S):
+iana-ssh-mac-algs@2026-03-06.yang:45: error: rev:non-backwards-compatible is required for this revision
+iana-ssh-mac-algs@2026-03-06.yang:62: error: the enum 'AEAD_AES_256_GCM', defined at iana-ssh-mac-algs@2024-10-16.yang:109 is illegally removed or marked obsolete
+iana-ssh-mac-algs@2026-03-06.yang:62: error: the value for enum 'hmac-sha2-256', has changed from 7 to 6 (RFC 7950: sec. 11, p5, bullet 1)
+iana-ssh-mac-algs@2026-03-06.yang:62: error: the value for enum 'hmac-sha2-512', has changed from 8 to 7 (RFC 7950: sec. 11, p5, bullet 1)
+</pre><a href="#appendix-A.1.1.2-12" class="pilcrow">¶</a>
+</div>
+<p id="appendix-A.1.1.2-13"><strong>Example Tool Output 3</strong>:<a href="#appendix-A.1.1.2-13" class="pilcrow">¶</a></p>
+<p id="appendix-A.1.1.2-14">This example output is for a change to a description statement.  The tool output suggests a version change from 1.0.0 → 1.0.1, which is correct if there is no change in semantics.  It is also highlights that it may be necessary to consult with the authors to determine if a semantic change has occurred (if it is not obvious).  If a semantic change has occurred, then the version change should be from 1.0.0 → 2.0.0.<a href="#appendix-A.1.1.2-14" class="pilcrow">¶</a></p>
+<div class="lang-text sourcecode" id="appendix-A.1.1.2-15">
+<pre>
+SUGGESTED-NEXT-YANG-SEMVER: 1.0.1
+POSSIBLE-NBC-CHANGE(S):
+Consult document authors and YANG Doctors.
+iana-ssh-mac-algs@2025-03-17.yang:138: warning: the description change may have changed the semantics of the node
+</pre><a href="#appendix-A.1.1.2-15" class="pilcrow">¶</a>
+</div>
+<p id="appendix-A.1.1.2-16">This example output indicates an NBC change has occurred, which is indicated by a major version number change and the addition of the <code>rev:non-backwards-compatible</code> statement.<a href="#appendix-A.1.1.2-16" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="generating-tree-diagrams-for-documentation">

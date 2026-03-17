@@ -79,9 +79,8 @@ This document provides guidance to the RFC Editor and IANA on managing YANG modu
 # Open Issues/Questions:
 1. Do we need guidance to IANA in this document to list modules both by revision date and version?  I.e., following the filename convention.
 1. This document is informational, is it appropriate to use RFC 2119 language?
-1. For the RFC Editor and ADs, do we want to allow the RFC Editor to apply errata to IETF YANG modules.
-1. Should RFC8126-bis have any guidance for IANA maintained YANG modules derived from IANA registries?
-1. For section {{sec-background}}, should we give examples of the rules, or just reference the module versioning draft [Reshad]?
+1. For the RFC Editor and ADs, do we want to allow the RFC Editor to apply errata to IETF YANG modules?
+1. For {{sec-background}}, should we give examples of the rules, or just reference the module versioning draft [Reshad]?
 
 # For Reviewers of this document
 
@@ -591,7 +590,7 @@ This appendix describes tooling available to assist the RFC Editor and IANA in v
 **Primary Use Cases**:
 
 1. Validating YANG module syntax and compliance with IETF conventions
-1. Detecting non-backwards-compatible changes between module versions
+1. Suggesting proposed next version when updating a YANG module
 1. Generating tree diagrams for documentation
 1. Formatting YANG modules in a consistent way prior to publication
 
@@ -609,29 +608,58 @@ This command below validates the module syntax and checks compliance with IETF-s
 pyang --ietf --strict --max-line-length=69 -Werror -p <dep-module-directory> ietf-module-name.yang
 ~~~~
 
-#### Checking for NBC Changes
+#### Suggesting proposed next version when updating a YANG module
 
-This command compares two versions of a module and reports any violations of the backwards-compatible update rules defined in {{I-D.ietf-netmod-yang-module-versioning}}.
+Pyang can be used to compare the changes between two YANG module versions and either validate that a suitable next version number has been used, or to suggest what the appropriate next version should be, or if further manual checks should be performed, e.g., for changes to description statements.
+
+If the new module version already includes a version statement for the latest version then it will check whether the version used matches the expected version that has been calculated based on the changes between the two module versions.  Otherwise, if the latest version does not contain a version statement then it will suggest the new version that should be used.
 
 ~~~~ shell
-pyang --check-update-from old-module.yang new-module.yang
+pyang --check-update-semver --check-update-from module-name@old-version.yang module-name@new-version.yang
 ~~~~
 
-This command validates the module syntax and checks compliance with IETF-specific conventions. The output will show any errors or warnings. IETF and IANA modules SHOULD have no errors or warnings before publication.
+**Interpreting Tool Output**
 
-**Interpreting Output**:
+The command output:
 
-- If the command reports no errors: The changes are backwards-compatible (BC) or editorial
-- If the command reports errors like "the enum 'X' has been removed": The changes are non-backwards-compatible (NBC), requiring a MAJOR version increment and the NBC extension
-- To distinguish BC from editorial changes, manually review the changes (editorial affects only documentation without semantic meaning changes)
+- will suggested the next YANG Semver, based on the changes.
+- indicate whether the ```rev:non-backwards-compatible``` annotation is needed.
+- highlight any non-backwards-compatible changes, which are reported as errors.
+- indicate if there are changes to any statements, e.g., description, that require further analysis to decide whether a semantic change has occurrred and hence if the change is not-backwards-compatible rather than editorial.
 
-**Example Output**:
+**Example Tool Output 1**:
+
+This example illustrates what the expected output would be for an update to a YANG module that is derived from an IANA registry update that defines a new enum or identity.  This is a minor version change and hence the version change recommended by the tool is from 1.0.0 → 1.1.0.
 
 ~~~~ text
-old-module.yang:15: error: the enum 'deprecated-value' has been removed
+SUGGESTED-NEXT-YANG-SEMVER: 1.1.0
 ~~~~
 
-This indicates an NBC change has occurred.
+**Example Tool Output 2**:
+
+This example output below due to deleting an enum entry indicates an NBC change has occurred. Hence the tool recommends a major version number change from 1.0.0 → 2.0.0 and the addition of the ```rev:non-backwards-compatible``` statement.
+
+~~~~ text
+SUGGESTED-NEXT-YANG-SEMVER: 2.0.0
+NBC-CHANGE(S):
+iana-ssh-mac-algs@2026-03-06.yang:45: error: rev:non-backwards-compatible is required for this revision
+iana-ssh-mac-algs@2026-03-06.yang:62: error: the enum 'AEAD_AES_256_GCM', defined at iana-ssh-mac-algs@2024-10-16.yang:109 is illegally removed or marked obsolete
+iana-ssh-mac-algs@2026-03-06.yang:62: error: the value for enum 'hmac-sha2-256', has changed from 7 to 6 (RFC 7950: sec. 11, p5, bullet 1)
+iana-ssh-mac-algs@2026-03-06.yang:62: error: the value for enum 'hmac-sha2-512', has changed from 8 to 7 (RFC 7950: sec. 11, p5, bullet 1)
+~~~~
+
+**Example Tool Output 3**:
+
+This example output is for a change to a description statement.  The tool output suggests a version change from 1.0.0 → 1.0.1, which is correct if there is no change in semantics.  It is also highlights that it may be necessary to consult with the authors to determine if a semantic change has occurred (if it is not obvious).  If a semantic change has occurred, then the version change should be from 1.0.0 → 2.0.0.
+
+~~~~ text
+SUGGESTED-NEXT-YANG-SEMVER: 1.0.1
+POSSIBLE-NBC-CHANGE(S):
+Consult document authors and YANG Doctors.
+iana-ssh-mac-algs@2025-03-17.yang:138: warning: the description change may have changed the semantics of the node
+~~~~
+
+This example output indicates an NBC change has occurred, which is indicated by a major version number change and the addition of the ```rev:non-backwards-compatible``` statement.
 
 #### Generating tree diagrams for documentation
 

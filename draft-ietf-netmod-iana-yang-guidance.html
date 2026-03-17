@@ -1625,7 +1625,7 @@ appear in all capitals, as shown here.<a href="#section-4-1" class="pilcrow">¶<
             <p id="section-5.4-3.1.1">Modules in Internet-Drafts <span class="bcp14">MUST</span> use pre-release versions (e.g., 0.1.0 or 2.0.0-draft-name) to indicate that the content may still change.<a href="#section-5.4-3.1.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="section-5.4-3.2">
-            <p id="section-5.4-3.2.1">Once a document is approved by the IESG and has been processed by the RFC editor, (<strong>TODO - Is IANA involved too?</strong>) then the module version <span class="bcp14">MUST</span> be updated to the correct release version (e.g., 1.0.0, or 2.0.0) before publication in an RFC or made available in the IANA YANG Module Names registry <span>[<a href="#IANA-YANG-PARAMETERS" class="cite xref">IANA-YANG-PARAMETERS</a>]</span>.<a href="#section-5.4-3.2.1" class="pilcrow">¶</a></p>
+            <p id="section-5.4-3.2.1">Once a document is approved by the IESG and has been processed by the RFC editor, then the module version <span class="bcp14">MUST</span> be updated to the correct release version (e.g., 1.0.0, or 2.0.0) before publication in an RFC or made available in the IANA YANG Module Names registry <span>[<a href="#IANA-YANG-PARAMETERS" class="cite xref">IANA-YANG-PARAMETERS</a>]</span>.<a href="#section-5.4-3.2.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="section-5.4-3.3">
             <p id="section-5.4-3.3.1">IANA-maintained modules <span class="bcp14">MUST</span> publish a new YANG module revision any time IANA registry changes require YANG module updates.<a href="#section-5.4-3.3.1" class="pilcrow">¶</a></p>
@@ -1752,7 +1752,7 @@ appear in all capitals, as shown here.<a href="#section-4-1" class="pilcrow">¶<
 <a href="#section-6.2.4" class="section-number selfRef">6.2.4. </a><a href="#name-step-4-validate-the-module" class="section-name selfRef">Step 4: Validate the Module</a>
           </h4>
 <p id="section-6.2.4-1">YANG modules are expected to be provided to the RFC Editor for publication already passing validation (pyang and yanglint).  However, it is possible that mistakes could be introduced when editing the YANG modules so validation should be re-run to ensure that IETF does not publish invalid YANG modules.<a href="#section-6.2.4-1" class="pilcrow">¶</a></p>
-<p id="section-6.2.4-2">After all updates are completed, or as updates as made, and after any formatting, then validation tools <span class="bcp14">MUST</span> be run
+<p id="section-6.2.4-2">After all updates are completed, or as updates are made, and after any formatting, then validation tools <span class="bcp14">MUST</span> be run
 over the resultant module to ensure that there are no warnings or errors.  pyang validation (<a href="#pyang-validation" class="auto internal xref">Appendix A.1.1.1</a>) <span class="bcp14">MUST</span> be performed, and it is <span class="bcp14">RECOMMENDED</span> that <em>yanglint</em> (<a href="#yang-lint-validation" class="auto internal xref">Appendix A.1.2</a>) validation is also performed.<a href="#section-6.2.4-2" class="pilcrow">¶</a></p>
 <p id="section-6.2.4-3">If the tools return any warnings or errors then the authors should help fix them, potentially seeking additional guidance if required, as per <a href="#sec-additional-guidance" class="auto internal xref">Section 8</a>.<a href="#section-6.2.4-3" class="pilcrow">¶</a></p>
 <p id="section-6.2.4-4">If further changes are made, then for previously published modules, the step 3 versioning check <span class="bcp14">MUST</span> be re-run to ensure that the module version is still correct.<a href="#section-6.2.4-4" class="pilcrow">¶</a></p>
@@ -2019,7 +2019,7 @@ over the resultant module to ensure that there are no warnings or errors.  pyang
           <h4 id="name-step-4-use-pyang-tooling-to">
 <a href="#section-7.4.4" class="section-number selfRef">7.4.4. </a><a href="#name-step-4-use-pyang-tooling-to" class="section-name selfRef">Step 4: Use Pyang Tooling to Check/Recommend Next Version</a>
           </h4>
-<p id="section-7.4.4-1">Use the tools described in <a href="#pyang-next-version" class="auto internal xref">Appendix A.1.1.3</a> to recommend or check (if provided in step 3) the next module version.  Be aware of the tooling limitations, as per <a href="#tool-limitations" class="auto internal xref">Appendix A.2</a>, and sanity check that the version recommeded by the tooling is what is expected based on the changes.<a href="#section-7.4.4-1" class="pilcrow">¶</a></p>
+<p id="section-7.4.4-1">Use the tools described in <a href="#pyang-next-version" class="auto internal xref">Appendix A.1.1.3</a> to recommend or check (if provided in step 3) the next module version.  Be aware of the tooling limitations, as per <a href="#tool-limitations" class="auto internal xref">Appendix A.2</a>, and sanity check that the version recommended by the tooling is what is expected based on the changes.<a href="#section-7.4.4-1" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-7.4.4-2.1">
               <p id="section-7.4.4-2.1.1">Add or update the version statement with the correct version<a href="#section-7.4.4-2.1.1" class="pilcrow">¶</a></p>
@@ -2035,7 +2035,7 @@ over the resultant module to ensure that there are no warnings or errors.  pyang
           <h4 id="name-step-5-validate-the-module">
 <a href="#section-7.4.5" class="section-number selfRef">7.4.5. </a><a href="#name-step-5-validate-the-module" class="section-name selfRef">Step 5: Validate the Module</a>
           </h4>
-<p id="section-7.4.5-1">Use validation tools, as per <a href="#pyang-validation" class="auto internal xref">Appendix A.1.1.1</a>, to ensure the updated module is syntactically correct.  Since these modules are simple, just checking with the <em>pyang</em> tool is sufficent but <em>yanglint</em> (<a href="#yang-lint-validation" class="auto internal xref">Appendix A.1.2</a>) may be used as an alternative.<a href="#section-7.4.5-1" class="pilcrow">¶</a></p>
+<p id="section-7.4.5-1">Use validation tools, as per <a href="#pyang-validation" class="auto internal xref">Appendix A.1.1.1</a>, to ensure the updated module is syntactically correct.  Since these modules are simple, just checking with the <em>pyang</em> tool is sufficient but <em>yanglint</em> (<a href="#yang-lint-validation" class="auto internal xref">Appendix A.1.2</a>) may be used as an alternative.<a href="#section-7.4.5-1" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="step-6-seek-additional-help-if-needed">
@@ -2678,7 +2678,7 @@ yanglint -p /path/to/yang/modules module-name.yang
               <td class="text-left" rowspan="1" colspan="1">Reuse old value (previously removed)</td>
               <td class="text-left" rowspan="1" colspan="1">Same as adding new entry</td>
               <td class="text-left" rowspan="1" colspan="1">BC</td>
-              <td class="text-left" rowspan="1" colspan="1">Minor</td>
+              <td class="text-left" rowspan="1" colspan="1">MINOR</td>
               <td class="text-left" rowspan="1" colspan="1">No</td>
             </tr>
             <tr>
@@ -3243,7 +3243,7 @@ revision 2026-03-01 {
   description "Defined 'ip' identity.";
 }
 
-identity ipv {
+identity ip {
   base interface-type;
   description "Interface supports IPv4 and IPv6.";
 }

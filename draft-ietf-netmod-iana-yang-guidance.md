@@ -22,7 +22,7 @@ venue:
   mail: "netmod@ietf.org"
   arch: "https://mailarchive.ietf.org/arch/browse/netmod/"
   github: "rgwilton/iana-yang-guidance"
-  latest: "https://rgwilton.github.io/iana-yang-guidance/draft-verdt-iana-yang-guidance.html"
+  latest: "https://rgwilton.github.io/iana-yang-guidance/draft-ietf-iana-yang-guidance.html"
 
 author:
  -
@@ -116,7 +116,7 @@ The procedures and classifications in this document are drawn from text and gene
 
 # Conventions and Definitions {#sec-conventions}
 
-<!-- {::boilerplate bcp14-tagged} -->
+{::boilerplate bcp14-tagged}
 
 This document uses the following terminology from {{I-D.ietf-netmod-yang-module-versioning}}:
 
@@ -159,7 +159,7 @@ For example, if a published IETF YANG module is at version *1.2.3*:
 - A backwards-compatible feature addition would update it to *1.3.0*
 - A non-backwards-compatible change would update it to *2.0.0*.
 
-Pre-release versions (versions with MAJOR = 0, e.g., "0.2.0", or with a pre-release suffix, e.g., "1.3.0-draft-verdt-iana-yang-guidance") indicate modules that have not completed the IETF standardization process and whose revision content is subject to change in non-backwards-compatible ways without corresponding changes to the major version number.  Published IETF and IANA YANG modules should always be at version "1.0.0" or later, and should never include a pre-release suffix.  The initial published version should be "1.0.0".
+Pre-release versions (versions with MAJOR = 0, e.g., "0.2.0", or with a pre-release suffix, e.g., "1.3.0-04") indicate modules that have not completed the IETF standardization process and whose revision content is subject to change in non-backwards-compatible ways without corresponding changes to the major version number.  Published IETF and IANA YANG modules should always be at version "1.0.0" or later, and should never include a pre-release suffix.  The initial published version should be "1.0.0".
 
 ## Backwards Compatibility Rules
 
@@ -226,7 +226,7 @@ This section describes the workflow and responsibilities for managing YANG modul
 
 All YANG modules published by the RFC Editor or maintained by IANA MUST meet the following requirements:
 
-1. **YANG Semver Version**: Every module MUST include a semantic version number using the `ysv:version` statement in its most recent revision. The version MUST be correct relative to any previously version of the same module published either by the RFC editor or on the IANA website.
+1. **YANG Semver Version**: Every module MUST include a semantic version number using the `ysv:version` statement in its most recent revision. The version MUST be correct relative to any previous version of the same module published either by the RFC editor or on the IANA website.
 
 2. **NBC Extension for NBC Changes**: If the module contains non-backwards-compatible changes relative to the previously published version, the revision statement MUST include the `rev:non-backwards-compatible` extension.
 
@@ -266,7 +266,7 @@ Before publication, the module version MUST be updated from the pre-release vers
 - Updates the revision date to reflect the date of the final revision
 - Updates the version to remove pre-release indicators (e.g., 0.1.0 → 1.0.0, or 1.1.0-\<draft-num\> → 1.1.0)
 - For modules that have previously been published, e.g., updated YANG modules in -bis documents:
-  - Uses pyang ({{pyang-next-version}}) to check that an appropriate new version has been choosen based on the relationship to any previously published version of the module.  Tooling is not infallible, so if the suggested version by the tooling is unexpected then please reach out for additional guidance, as per {{sec-additional-guidance}}.
+  - Uses pyang ({{pyang-next-version}}) to check that an appropriate new version has been chosen based on the relationship to any previously published version of the module.  Tooling is not infallible, so if the suggested version by the tooling is unexpected then please reach out for additional guidance, as per {{sec-additional-guidance}}.
   - Checks, and if necessary adds, the `rev:non-backwards-compatible` extension if NBC changes have occurred since the previous publication
 
 ### Step 4: Validate the Module
@@ -407,7 +407,7 @@ Use the tools described in {{pyang-next-version}} to recommend or check (if prov
 
 ### Step 5: Validate the Module
 
-Use validation tools, as per {{pyang-validation}}, to ensure the updated module is syntactically correct.  Since these modules are simple, just checking with the *pyang* tool is sufficent, but *yanglint* ({{yang-lint-validation}}) may be used as an alternative.
+Use validation tools, as per {{pyang-validation}}, to ensure the updated module is syntactically correct.  Since these modules are simple, just checking with the *pyang* tool is sufficent but *yanglint* ({{yang-lint-validation}}) may be used as an alternative.
 
 ### Step 6: Seek additional help if Needed
 
@@ -678,49 +678,6 @@ Access the web interface at <https://www.yangcatalog.org> and use the "Validator
 
 The online tools provide visual feedback on validation results and module comparisons. The impact analysis tool can show which other modules depend on a given module, helping assess the impact of changes.
 
-<!--
-## Recommended Workflow
-
-The following workflow is recommended for validating and versioning YANG modules:
-
-1. **Make Changes to Module** - Update the YANG file based on registry changes or RFC Editor edits
-
-2. **Validate Syntax** - Run pyang or yanglint to check for syntax errors:
-   ~~~~ shell
-   pyang - -ietf module-name.yang
-   ~~~~
-
-3. **Check for NBC Changes** - Use pyang to compare with the previous version:
-   ~~~~ shell
-   pyang - -check-update-from old-version.yang new-version.yang
-   ~~~~
-
-4. **Review Tool Output** - Analyze any reported issues:
-   - Errors from `- -check-update-from` indicate NBC changes
-   - No errors indicate BC or editorial changes
-
-5. **Determine Version** - Based on the tool output and manual review:
-   - NBC changes → MAJOR version increment (e.g., 1.0.0 → 2.0.0)
-   - BC changes (new functionality) → MINOR version increment (e.g., 1.0.0 → 1.1.0)
-   - Editorial changes (documentation only) → PATCH version increment (e.g., 1.0.0 → 1.0.1)
-
-6. **Add Revision Statement** - Include:
-   - Current date
-   - New version number using `ysv:version`
-   - Clear description of changes
-   - `rev:non-backwards-compatible` extension if NBC changes occurred
-
-7. **Final Validation** - Validate the complete updated module:
-   ~~~~ shell
-   pyang - -ietf module-name.yang
-   ~~~~
-
-8. **Seek Review if Needed** - Contact experts ({{sec-additional-guidance}}) if:
-   - Tool output is unclear or surprising
-   - Classification is uncertain
-   - Description changes may have altered semantic meaning
--->
-
 ## Tool Limitations {#tool-limitations}
 
 While tools are valuable for YANG module validation and versioning, they have a couple of limitations relevant to their usage here:
@@ -729,7 +686,7 @@ While tools are valuable for YANG module validation and versioning, they have a 
 
 Current tools cannot determine whether a description change is purely editorial (clarifying existing meaning), backwards-incompatible (changing meaning). Human or AI judgment is required to make this distinction.
 
-Example: Changing "Ethernet interface" to "Ethernet interface, includes all Ethernet interface speeds" could be editorial (if those variants were always included).  But changing an "ip" type from a description saying "IPv4 address or IPv6 address" to just "IPv4 address" would be regarded an a NBC change because the scope of the type has clearly changed and may impact users of that type.
+Example: Changing "Ethernet interface" to "Ethernet interface, includes all Ethernet interface speeds" could be editorial (if those variants were always included).  But changing an "ip" type from a description saying "IPv4 address or IPv6 address" to just "IPv4 address" would be regarded as an NBC change because the scope of the type has clearly changed and may impact users of that type.
 
 **Limitation 2: May Produce False Positives or False Negatives**
 
@@ -744,7 +701,7 @@ This appendix provides a comprehensive reference of common scenarios encountered
 
 ## Quick Reference Table
 
-The assumption is that the YANG module uses the registry entry name, numeric identifier, description, status, and any reference fields as part of the YANG entries.  If additional fields from the registry are used in the YANG module (e.g., perhaps the YANG description is constucted from multiple registry fields) then any changes to those fields will require a new version of the YANG module to be published and an appropriate new version number, chosen based on the actual change to the YANG module.
+The assumption is that the YANG module uses the registry entry name, numeric identifier, description, status, and any reference fields as part of the YANG entries.  If additional fields from the registry are used in the YANG module (e.g., perhaps the YANG description is constructed from multiple registry fields) then any changes to those fields will require a new version of the YANG module to be published and an appropriate new version number, chosen based on the actual change to the YANG module.
 
 **Important Principle**: The source or trigger of a change (errata, new RFC, registry update, expert review, etc.) does NOT determine whether it is NBC, BC, or Editorial. What matters is the resultant change made to the YANG module content.
 
@@ -794,7 +751,7 @@ Note: The following scenarios only contain snippets of YANG to illustrate the ch
 
 **NBC Extension Required**: No
 
-**Rationale**: Adding a new type is backwards compatible because it cannot break backwards-compatability of existing implementations.
+**Rationale**: Adding a new type is backwards compatible because it cannot break backwards-compatibility of existing implementations.
 
 **Example**:
 
@@ -1193,7 +1150,7 @@ revision 2026-02-20 {
 }
 revision 2026-01-10 {
   ysv:version "2.3.0";
-  description "Added multiple identiies.";
+  description "Added multiple identities.";
 }
 
 typedef interface-type {

@@ -407,7 +407,7 @@ Use the tools described in {{pyang-next-version}} to recommend or check (if prov
 
 ### Step 5: Validate the Module
 
-Use validation tools, as per {{pyang-validation}}, to ensure the updated module is syntactically correct.  Since these modules are simple, just checking using the *pyang* tool is sufficient but *yanglint* ({{yang-lint-validation}}) may be used as an alternative.
+Use validation tools, as per {{pyang-validation}}, to ensure the updated module is syntactically correct.  Since these modules are simple, just checking with the *pyang* tool is sufficient but *yanglint* ({{yang-lint-validation}}) may be used as an alternative.
 
 ### Step 6: Seek additional help if Needed
 

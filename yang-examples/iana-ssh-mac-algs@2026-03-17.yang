@@ -42,13 +42,13 @@ module iana-ssh-mac-algs {
      All versions of this module are published by IANA at
      https://www.iana.org/assignments/yang-parameters.";
 
-  revision 2026-03-17 {
+ /* revision 2026-03-17 {
     ysv:version "1.1.0";
     description
       "Added new enum value";
     reference
       "RFC 9644: YANG Groupings for SSH Clients and SSH Servers";
-  }
+  }*/
 
   revision 2024-10-16 {
     ysv:version "1.0.0";

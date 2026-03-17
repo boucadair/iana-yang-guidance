@@ -403,7 +403,7 @@ Determine exactly what changed in the registry:
 - Was an entry removed?
 - Were multiple changes made simultaneously?
 
-### Step 3: Apply Changes to the YANG Module
+### Step 3: Apply Equivalen Changes to the YANG Module
 
 Update the YANG module to reflect the registry changes. For IANA-maintained modules, this typically involves:
 
@@ -411,47 +411,22 @@ Update the YANG module to reflect the registry changes. For IANA-maintained modu
 - Updating description or reference statements for modified entries
 - Changing status statements for deprecated or obsoleted entries
 - Removing entries only if they are obsolete or if the defining RFC specifies removal
+- Add a revision statement (using the current date) describing the change, and a reference, if appropriate.
+- *(Optional) include a version statement with the anticipated new version and an ```rev:non-backwards-compatible``` statement if it is a backwards-incompatible change.*
+- *(Optional) Use tooling to format the YANG module, as described in {{pyang-formatting}}.*
 
-### Step 4: Use Tooling to Determine the Version
+### Step 4: Use Pyang Tooling to Check/Recommend Next Version
 
-Use the tools described in {{appendix-tooling}} to compare the updated module with the previously published version.  I.e., it is only the change in the YANG file that determines what the new version should be. The `pyang --check-update-from` command will identify any non-backwards-compatible changes:
+Use the tools described in {{pyang-next-version}} to recommend or check (if provided in step 3) the next module version.  Be aware of the tooling limitations, as per {{tool-limitations}}, and sanity check that the version recommeded by the tooling is what is expected based on the changes.
 
-~~~~ shell
-pyang --check-update-from iana-if-type@2025-10-15.yang \
-                          iana-if-type@2025-11-15.yang
-~~~~
+- Add or update the version statement with the correct version
+- Add rev:non-backwards-compatible` extension if NBC changes have occurred
 
-If the tool reports NBC violations, the MAJOR version must be incremented and the `rev:non-backwards-compatible` extension MUST be added.
+### Step 5: Validate the Module
 
-If the tool reports no violations, determine whether the change is backwards-compatible (BC) or editorial:
+Use validation tools, as per {{pyang-validation}}, to ensure the updated module is syntactically correct.  Since these modules are simple, just checking with the *pyang* tool is sufficent, but *yanglint* ({{yang-lint-validation}}) may be used as an alternative.
 
-- **Editorial**: Only documentation changed (descriptions, references) without semantic meaning change → PATCH increment
-- **BC**: New functionality added (new enums, identities) or status changed to deprecated → MINOR increment
-
-### Step 5: Update the Revision Statement
-
-Add a new revision statement at the top of the module with:
-
-- The current date
-- The new version number (calculated based on the change classification)
-- A brief description of what has changed (some examples are given in the appendix)
-- The `rev:non-backwards-compatible` extension if NBC changes occurred
-
-### Step 6: Validate the Module
-
-Use validation tools to ensure the updated module is syntactically correct.  Since these modules are simple just checking with the *pyang* tool is sufficent, but *yanglint* may be used as an alternative.
-
-~~~~ shell
-pyang --ietf iana-if-type@2025-11-15.yang
-~~~~
-
-or
-
-~~~~ shell
-yanglint iana-if-type@2025-11-15.yang
-~~~~
-
-### Step 7: Seek additional help if Needed
+### Step 6: Seek additional help if Needed
 
 In most cases, the classification will be straightforward. However, if any of the following apply, IANA should seek additional guidance as described in {{sec-additional-guidance}}:
 
@@ -460,11 +435,12 @@ In most cases, the classification will be straightforward. However, if any of th
 - Description changes, where it is not obvious if they change semantic meaning
 - Any situation not covered by the guidance above, or examples in {{appendix-scenarios}}
 
-### Step 8: Publish the Updated Module
+### Step 7: Publish the Updated Module
 
 Once the module is validated and the version is confirmed:
 
 - Publish the updated module to the IANA website
+- The module name should use ```<module-name>#<version>.yang``` {{I-D.ietf-netmod-yang-module-filename}}
 - Update any relevant registries or indexes
 - Ensure the new version is discoverable and accessible
 
@@ -590,9 +566,9 @@ This appendix describes tooling available to assist the RFC Editor and IANA in v
 **Primary Use Cases**:
 
 1. Validating YANG module syntax and compliance with IETF conventions
+1. Formatting YANG modules in a consistent way prior to publication
 1. Suggesting proposed next version when updating a YANG module
 1. Generating tree diagrams for documentation
-1. Formatting YANG modules in a consistent way prior to publication
 
 **Installation**: pyang is available via PyPI (`pip install pyang`) or from <https://github.com/mbj4668/pyang>.  It is recommended to periodically check and update the version to pick up bugfixes and new functionality (which could include stricter checks).
 
@@ -600,7 +576,7 @@ This appendix describes tooling available to assist the RFC Editor and IANA in v
 
 To ensure that pyang correctly processes the YANG files, then the correct versions of any YANG module dependencies must also be used, this is often the latest version of the published YANG modules, but if a draft contains a set of YANG modules, or if there are set of drafts with YANG modules being published together then all the YANG modules in those drafts MUST be extracted together and validated.  These dependent YANG modules can either be stored in the same directory as the YANG module being validated/checked, or they can be stored in a separate directory and passed using the ```-p``` argument to provide a path to the directory.
 
-#### Basic YANG Syntax Validation
+#### Basic YANG Syntax Validation {#pyang-validation}
 
 This command below validates the module syntax and checks compliance with IETF-specific conventions. The output will show any errors or warnings. IETF and IANA modules SHOULD have no errors or warnings before publication.
 
@@ -608,7 +584,15 @@ This command below validates the module syntax and checks compliance with IETF-s
 pyang --ietf --strict --max-line-length=69 -Werror -p <dep-module-directory> ietf-module-name.yang
 ~~~~
 
-#### Suggesting proposed next version when updating a YANG module
+#### Consistent formatting of YANG modules {#pyang-formatting}
+
+Pyang can be used to reformat a YANG file, particularly fixing line length issues and correcting any indentation mistakes.  Some complex expressions, e.g., ```must```, ```when``` and path statements may not be automatically split to the correct line length and may need to be done manually.  Running the basic syntax validation command on the output file will indicate whether any further manual line folding is required.
+
+~~~~ shell
+pyang -f yang --yang-line-length=69 --yang-canonical -Werror -p <dep-module-directory> -o <output-file> <treeOpts> ietf-module-name.yang
+~~~~
+
+#### Suggesting proposed next version when updating a YANG module {#pyang-next-version}
 
 Pyang can be used to compare the changes between two YANG module versions and either validate that a suitable next version number has been used, or to suggest what the appropriate next version should be, or if further manual checks should be performed, e.g., for changes to description statements.
 
@@ -661,7 +645,7 @@ iana-ssh-mac-algs@2025-03-17.yang:138: warning: the description change may have 
 
 This example output indicates an NBC change has occurred, which is indicated by a major version number change and the addition of the ```rev:non-backwards-compatible``` statement.
 
-#### Generating tree diagrams for documentation
+#### Generating tree diagrams for documentation {#pyang-tree}
 
 Pyang can be used to generate tree diagram output that conforms to {{RFC8340}}.  The command below generates the tree diagram for `ietf-module-name.yang`, limited to a line length of 69 characters and writes it into the specified ```output-file```.  The ```tree-options``` is based on the options in pyang that are prefixed with ```--tree``` and can be seen by running ```pyang --help```.  Common options may include printing out grouping (```--tree-print-groupings```) or printing out structures (```--tree-print-structures```).
 
@@ -669,16 +653,7 @@ Pyang can be used to generate tree diagram output that conforms to {{RFC8340}}. 
 pyang -f tree --tree-line-length=69 -Werror -p <dep-module-directory> -o <output-file> <tree-options> ietf-module-name.yang
 ~~~~
 
-
-#### Consistent formatting of YANG modules
-
-Pyang can be used to reformat a YANG file, particularly fixing line length issues and correcting any indentation mistakes.  Some complex expressions, e.g., ```must```, ```when``` and path statements may not be automatically split to the correct line length and may need to be done manually.  Running the basic syntax validation command on the output file will indicate whether any further manual line folding is required.
-
-~~~~ shell
-pyang -f yang --yang-line-length=69 --yang-canonical -Werror -p <dep-module-directory> -o <output-file> <treeOpts> ietf-module-name.yang
-~~~~
-
-### yanglint
+### yanglint {#yang-lint-validation}
 
 **Purpose**: yanglint is a YANG validator and data manipulation tool from the libyang project, useful for validating modules and instance data.
 
@@ -763,7 +738,7 @@ The following workflow is recommended for validating and versioning YANG modules
    - Description changes may have altered semantic meaning
 -->
 
-## Tool Limitations
+## Tool Limitations {#tool-limitations}
 
 While tools are valuable for YANG module validation and versioning, they have a couple of limitations relevant to their usage here:
 

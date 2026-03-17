@@ -255,17 +255,19 @@ These editorial changes are appropriate and expected. The RFC Editor SHOULD:
 
 - Coordinate with document authors regarding any substantive changes
 - Ensure that only editorial changes (as defined in {{sec-background}}) are made without author consultation
-- If more significant changes are needed that might be backwards-compatible or non-backwards-compatible, consult with the authors to determine the correct version number and whether the `rev:non-backwards-compatible` extension is required.
+- For modules that have previously been published, e.g., updated YANG modules in -bis documents:
+  - If more significant changes are needed that might be backwards-compatible or non-backwards-compatible, consult with the authors to determine the correct version number and whether the `rev:non-backwards-compatible` extension is required.
 - Ensure that final module is correctly formatted (e.g., by running {{pyang-formatting}})
 
 ### Step 3: Finalizing the Module Version
 
 Before publication, the module version MUST be updated from the pre-release version to a release version. The RFC Editor, in coordination with the document authors:
 
-- Updates the version to remove pre-release indicators (e.g., 0.1.0 → 1.0.0, or 1.1.0-\<draft-num\> → 1.1.0)
-- Uses pyang ({{pyang-next-version}}) to check that an appropriate new version has been choosen based on the relationship to any previously published version of the module.  Tooling is not infallible, so if the suggested version by the tooling is unexpected then please reach out for additional guidance, as per {{sec-additional-guidance}}.
-- Adds the `rev:non-backwards-compatible` extension if NBC changes have occurred since the previous publication
 - Updates the revision date to reflect the date of the final revision
+- Updates the version to remove pre-release indicators (e.g., 0.1.0 → 1.0.0, or 1.1.0-\<draft-num\> → 1.1.0)
+- For modules that have previously been published, e.g., updated YANG modules in -bis documents:
+  - Uses pyang ({{pyang-next-version}}) to check that an appropriate new version has been choosen based on the relationship to any previously published version of the module.  Tooling is not infallible, so if the suggested version by the tooling is unexpected then please reach out for additional guidance, as per {{sec-additional-guidance}}.
+  - Checks, and if necessary adds, the `rev:non-backwards-compatible` extension if NBC changes have occurred since the previous publication
 
 ### Step 4: Validate the Module
 
@@ -276,7 +278,7 @@ over the resultant module to ensure that there are no warnings or errors.  pyang
 
 If the tools return any warnings or errors then the authors should help fix them, potentially seeking additional guidance if required, as per {{sec-additional-guidance}}.
 
-If further changes are made, that the step 3 versioning check MUST be re-run to ensure that the module version is still correct.
+If further changes are made, then for previously published modules, the step 3 versioning check MUST be re-run to ensure that the module version is still correct.
 
 ### Step 5: IANA Delay of Publication
 

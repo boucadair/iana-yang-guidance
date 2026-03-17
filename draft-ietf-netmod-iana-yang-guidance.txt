@@ -484,10 +484,13 @@ Table of Contents
    *  Ensure that only editorial changes (as defined in Section 5) are
       made without author consultation
 
-   *  If more significant changes are needed that might be backwards-
-      compatible or non-backwards-compatible, consult with the authors
-      to determine the correct version number and whether the rev:non-
-      backwards-compatible extension is required.
+   *  For modules that have previously been published, e.g., updated
+      YANG modules in -bis documents:
+
+      -  If more significant changes are needed that might be backwards-
+         compatible or non-backwards-compatible, consult with the
+         authors to determine the correct version number and whether the
+         rev:non-backwards-compatible extension is required.
 
    *  Ensure that final module is correctly formatted (e.g., by running
       Appendix A.1.1.2)
@@ -498,21 +501,25 @@ Table of Contents
    release version to a release version.  The RFC Editor, in
    coordination with the document authors:
 
+   *  Updates the revision date to reflect the date of the final
+      revision
+
    *  Updates the version to remove pre-release indicators (e.g., 0.1.0
       → 1.0.0, or 1.1.0-<draft-num> → 1.1.0)
 
-   *  Uses pyang (Appendix A.1.1.3) to check that an appropriate new
-      version has been choosen based on the relationship to any
-      previously published version of the module.  Tooling is not
-      infallible, so if the suggested version by the tooling is
-      unexpected then please reach out for additional guidance, as per
-      Section 8.
+   *  For modules that have previously been published, e.g., updated
+      YANG modules in -bis documents:
 
-   *  Adds the rev:non-backwards-compatible extension if NBC changes
-      have occurred since the previous publication
+      -  Uses pyang (Appendix A.1.1.3) to check that an appropriate new
+         version has been choosen based on the relationship to any
+         previously published version of the module.  Tooling is not
+         infallible, so if the suggested version by the tooling is
+         unexpected then please reach out for additional guidance, as
+         per Section 8.
 
-   *  Updates the revision date to reflect the date of the final
-      revision
+      -  Checks, and if necessary adds, the rev:non-backwards-compatible
+         extension if NBC changes have occurred since the previous
+         publication
 
 6.2.4.  Step 4: Validate the Module
 
@@ -533,8 +540,9 @@ Table of Contents
    help fix them, potentially seeking additional guidance if required,
    as per Section 8.
 
-   If further changes are made, that the step 3 versioning check MUST be
-   re-run to ensure that the module version is still correct.
+   If further changes are made, then for previously published modules,
+   the step 3 versioning check MUST be re-run to ensure that the module
+   version is still correct.
 
 6.2.5.  Step 5: IANA Delay of Publication
 

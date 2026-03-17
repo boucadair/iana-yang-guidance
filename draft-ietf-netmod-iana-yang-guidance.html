@@ -1702,7 +1702,12 @@ svg :is([fill="white"], [fill^="#fff"]) {
               <p id="section-6.2.2-4.2.1">Ensure that only editorial changes (as defined in <a href="#sec-background" class="auto internal xref">Section 5</a>) are made without author consultation<a href="#section-6.2.2-4.2.1" class="pilcrow">¶</a></p>
 </li>
             <li class="normal" id="section-6.2.2-4.3">
-              <p id="section-6.2.2-4.3.1">If more significant changes are needed that might be backwards-compatible or non-backwards-compatible, consult with the authors to determine the correct version number and whether the <code>rev:non-backwards-compatible</code> extension is required.<a href="#section-6.2.2-4.3.1" class="pilcrow">¶</a></p>
+              <p id="section-6.2.2-4.3.1">For modules that have previously been published, e.g., updated YANG modules in -bis documents:<a href="#section-6.2.2-4.3.1" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-6.2.2-4.3.2.1">
+                  <p id="section-6.2.2-4.3.2.1.1">If more significant changes are needed that might be backwards-compatible or non-backwards-compatible, consult with the authors to determine the correct version number and whether the <code>rev:non-backwards-compatible</code> extension is required.<a href="#section-6.2.2-4.3.2.1.1" class="pilcrow">¶</a></p>
+</li>
+              </ul>
 </li>
             <li class="normal" id="section-6.2.2-4.4">
               <p id="section-6.2.2-4.4.1">Ensure that final module is correctly formatted (e.g., by running <a href="#pyang-formatting" class="auto internal xref">Appendix A.1.1.2</a>)<a href="#section-6.2.2-4.4.1" class="pilcrow">¶</a></p>
@@ -1718,16 +1723,21 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <p id="section-6.2.3-1">Before publication, the module version MUST be updated from the pre-release version to a release version. The RFC Editor, in coordination with the document authors:<a href="#section-6.2.3-1" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-6.2.3-2.1">
-              <p id="section-6.2.3-2.1.1">Updates the version to remove pre-release indicators (e.g., 0.1.0 → 1.0.0, or 1.1.0-&lt;draft-num&gt; → 1.1.0)<a href="#section-6.2.3-2.1.1" class="pilcrow">¶</a></p>
+              <p id="section-6.2.3-2.1.1">Updates the revision date to reflect the date of the final revision<a href="#section-6.2.3-2.1.1" class="pilcrow">¶</a></p>
 </li>
             <li class="normal" id="section-6.2.3-2.2">
-              <p id="section-6.2.3-2.2.1">Uses pyang (<a href="#pyang-next-version" class="auto internal xref">Appendix A.1.1.3</a>) to check that an appropriate new version has been choosen based on the relationship to any previously published version of the module.  Tooling is not infallible, so if the suggested version by the tooling is unexpected then please reach out for additional guidance, as per <a href="#sec-additional-guidance" class="auto internal xref">Section 8</a>.<a href="#section-6.2.3-2.2.1" class="pilcrow">¶</a></p>
+              <p id="section-6.2.3-2.2.1">Updates the version to remove pre-release indicators (e.g., 0.1.0 → 1.0.0, or 1.1.0-&lt;draft-num&gt; → 1.1.0)<a href="#section-6.2.3-2.2.1" class="pilcrow">¶</a></p>
 </li>
             <li class="normal" id="section-6.2.3-2.3">
-              <p id="section-6.2.3-2.3.1">Adds the <code>rev:non-backwards-compatible</code> extension if NBC changes have occurred since the previous publication<a href="#section-6.2.3-2.3.1" class="pilcrow">¶</a></p>
+              <p id="section-6.2.3-2.3.1">For modules that have previously been published, e.g., updated YANG modules in -bis documents:<a href="#section-6.2.3-2.3.1" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-6.2.3-2.3.2.1">
+                  <p id="section-6.2.3-2.3.2.1.1">Uses pyang (<a href="#pyang-next-version" class="auto internal xref">Appendix A.1.1.3</a>) to check that an appropriate new version has been choosen based on the relationship to any previously published version of the module.  Tooling is not infallible, so if the suggested version by the tooling is unexpected then please reach out for additional guidance, as per <a href="#sec-additional-guidance" class="auto internal xref">Section 8</a>.<a href="#section-6.2.3-2.3.2.1.1" class="pilcrow">¶</a></p>
 </li>
-            <li class="normal" id="section-6.2.3-2.4">
-              <p id="section-6.2.3-2.4.1">Updates the revision date to reflect the date of the final revision<a href="#section-6.2.3-2.4.1" class="pilcrow">¶</a></p>
+                <li class="normal" id="section-6.2.3-2.3.2.2">
+                  <p id="section-6.2.3-2.3.2.2.1">Checks, and if necessary adds, the <code>rev:non-backwards-compatible</code> extension if NBC changes have occurred since the previous publication<a href="#section-6.2.3-2.3.2.2.1" class="pilcrow">¶</a></p>
+</li>
+              </ul>
 </li>
           </ul>
 </section>
@@ -1741,7 +1751,7 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <p id="section-6.2.4-2">After all updates are completed, or as updates as made, and after any formatting, then validation tools MUST be run
 over the resultant module to ensure that there are no warnings or errors.  pyang validation (<a href="#pyang-validation" class="auto internal xref">Appendix A.1.1.1</a>) MUST be performed, and it is RECOMMENDED that <em>yanglint</em> (<a href="#yang-lint-validation" class="auto internal xref">Appendix A.1.2</a>) validation is also performed.<a href="#section-6.2.4-2" class="pilcrow">¶</a></p>
 <p id="section-6.2.4-3">If the tools return any warnings or errors then the authors should help fix them, potentially seeking additional guidance if required, as per <a href="#sec-additional-guidance" class="auto internal xref">Section 8</a>.<a href="#section-6.2.4-3" class="pilcrow">¶</a></p>
-<p id="section-6.2.4-4">If further changes are made, that the step 3 versioning check MUST be re-run to ensure that the module version is still correct.<a href="#section-6.2.4-4" class="pilcrow">¶</a></p>
+<p id="section-6.2.4-4">If further changes are made, then for previously published modules, the step 3 versioning check MUST be re-run to ensure that the module version is still correct.<a href="#section-6.2.4-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="step-5-iana-delay-of-publication">

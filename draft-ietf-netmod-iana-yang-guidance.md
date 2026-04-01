@@ -76,12 +76,6 @@ This document provides guidance to the RFC Editor and IANA on managing YANG modu
 
 --- middle
 
-# Open Issues/Questions:
-1. Do we need guidance to IANA in this document to list modules both by revision date and version?  I.e., following the filename convention.
-1. This document is informational, is it appropriate to use RFC 2119 language?
-1. For the RFC Editor and ADs, do we want to allow the RFC Editor to apply errata to IETF YANG modules?
-1. For {{sec-background}}, should we give examples of the rules, or just reference the module versioning draft \[Reshad\]?
-
 # For Reviewers of this document
 
 **RFC Editor - please delete this section before publication**
@@ -230,6 +224,8 @@ All YANG modules published by the RFC Editor or maintained by IANA MUST meet the
 
 2. **NBC Extension for NBC Changes**: If the module contains non-backwards-compatible changes relative to the previously published version, the revision statement MUST include the `rev:non-backwards-compatible` extension.
 
+   In current tooling, general enforcement of this rule is performed by update comparison checks such as the `--check-update-from` option to ```pyang```. Please also note, the ```pyang``` checks provided by the `--ietf` option only provide a narrower validation based on revision-to-revision YANG Semver major-version changes.
+
 3. **Revision Immutability**: A published YANG module with a specific revision date and version number is immutable. Its content MUST NOT change without also changing the revision date and version number. For this reason, modules in Internet-Drafts use pre-release versions (e.g., versions with MAJOR = 0 such as 0.1.0, or versions with a pre-release suffix such as 2.0.0-05, where the -05 is the Internet Draft number where the YANG module was updated) to indicate that content may still change before final publication.
 
 4. **RFC Code Markers**: YANG modules in RFCs MUST be properly marked with `<CODE BEGINS>` and `<CODE ENDS>` markers (or equivalent in the source format) to enable automated extraction. The markers MUST include the filename following the conventions in {{I-D.ietf-netmod-yang-module-filename}}.
@@ -266,7 +262,7 @@ Before publication, the module version MUST be updated from the pre-release vers
 - Updates the revision date to reflect the date of the final revision
 - Updates the version to remove pre-release indicators (e.g., 0.1.0 → 1.0.0, or 1.1.0-\<draft-num\> → 1.1.0)
 - For modules that have previously been published, e.g., updated YANG modules in -bis documents:
-  - Uses pyang ({{pyang-next-version}}) to check that an appropriate new version has been chosen based on the relationship to any previously published version of the module.  Tooling is not infallible, so if the suggested version by the tooling is unexpected then please reach out for additional guidance, as per {{sec-additional-guidance}}.
+  - Uses pyang ({{pyang-next-version}}) to compare the candidate module against the previously published version and obtain a recommended next YANG Semver, subject to the tool limitations described in {{pyang-next-version}} and {{tool-limitations}}.  Tooling is not infallible, so if the suggested version from the tooling is unexpected then please reach out for additional guidance, as per {{sec-additional-guidance}}.
   - Checks, and if necessary adds, the `rev:non-backwards-compatible` extension if NBC changes have occurred since the previous publication
 
 ### Step 4: Validate the Module
@@ -423,7 +419,7 @@ In most cases, the classification will be straightforward. However, if any of th
 Once the module is validated and the version is confirmed:
 
 - Publish the updated module to the IANA website
-- The module name should use ```<module-name>#<version>.yang``` {{I-D.ietf-netmod-yang-module-filename}}
+- Publish the module using two URLs, one using the version and one using the revision date: ```<module-name>#<version>.yang``` and ```<module-name>@<revision-date>.yang```, as per {{I-D.ietf-netmod-yang-module-filename}}.
 - Update any relevant registries or indexes
 - Ensure the new version is discoverable and accessible
 
@@ -579,7 +575,11 @@ pyang -f yang --yang-line-length=69 --yang-canonical -Werror -p <dep-module-dire
 
 Pyang can be used to compare the changes between two YANG module versions and either validate that a suitable next version number has been used, or to suggest what the appropriate next version should be, or if further manual checks should be performed, e.g., for changes to description statements.
 
-If the new module version already includes a version statement for the latest version then it will check whether the version used matches the expected version that has been calculated based on the changes between the two module versions.  Otherwise, if the latest version does not contain a version statement then it will suggest the new version that should be used.
+If the new module version already includes a version statement for the latest revision then pyang can perform a limited set of policy checks against the declared version.  In the current implementation, this is not a full exact-match validation for every possible declared version.  Instead, the tool reports specific cases where the declared version is inconsistent with detected known NBC changes or with certain possible-NBC outcomes.  Otherwise, if the latest revision does not contain a version statement then it will suggest the new version that should be used.
+
+If the previous revision being compared does not contain a `ysv:version` statement, then the tool assumes an old version of 1.0.0 and reports that assumption explicitly in its output.
+
+If the old version is itself a pre-release form, for example with MAJOR = 0 or with pre-release metadata, then the current implementation may be unable to recommend a next release version automatically.
 
 ~~~~ shell
 pyang --check-update-semver --check-update-from module-name@old-version.yang module-name@new-version.yang
@@ -617,7 +617,7 @@ iana-ssh-mac-algs@2026-03-06.yang:62: error: the value for enum 'hmac-sha2-512',
 
 **Example Tool Output 3**:
 
-This example output is for a change to a description statement.  The tool output suggests a version change from 1.0.0 → 1.0.1, which is correct if there is no change in semantics.  It is also highlights that it may be necessary to consult with the authors to determine if a semantic change has occurred (if it is not obvious).  If a semantic change has occurred, then the version change should be from 1.0.0 → 2.0.0.
+This example output is for a change to a description or reference statement.  The tool output suggests a version change from 1.0.0 → 1.0.1, which is correct if there is no change in semantics.  It also highlights that it may be necessary to consult with the authors to determine if a semantic change has occurred, if that is not obvious.  If after reviewing, the conclusion is that a semantic change has occurred, then the version change should be from 1.0.0 → 2.0.0 and the ```rev:non-backwards-compatible``` statement should be added.
 
 ~~~~ text
 SUGGESTED-NEXT-YANG-SEMVER: 1.0.1
@@ -625,8 +625,6 @@ POSSIBLE-NBC-CHANGE(S):
 Consult document authors and YANG Doctors.
 iana-ssh-mac-algs@2025-03-17.yang:138: warning: the description change may have changed the semantics of the node
 ~~~~
-
-This example output indicates an NBC change has occurred, which is indicated by a major version number change and the addition of the ```rev:non-backwards-compatible``` statement.
 
 #### Generating tree diagrams for documentation {#pyang-tree}
 
